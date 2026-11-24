@@ -1,0 +1,2934 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>爆炸地震學（Forensic Seismology）—— 講座深度紀錄與觀測解析 | 梁文宗 老師</title>
+    <meta name="description" content="中央研究院地球科學研究所 梁文宗老師「爆炸地震學：從觀測角度看非天然地震」講座完整紀錄。詳細探討法醫地震學、北韓核試爆辨識、台灣 TIGER 炸測實驗、地動衰減經驗式與 2014 高雄氣爆反推。">
+    <meta name="author" content="DaYi Chen / 講座筆記校勘">
+    <meta property="og:title" content="爆炸地震學（Forensic Seismology）—— 講座深度紀錄與觀測解析">
+    <meta property="og:description" content="從觀測角度看非天然地震：地殼導波、核爆辨識、TIGER炸測實驗與法醫地震學之科學推演">
+    <meta property="og:type" content="article">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,600;0,700;1,400&family=Noto+Sans+TC:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons & Tailwind -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        seismic: {
+                            950: '#060a12',
+                            900: '#0b1220',
+                            850: '#101a2e',
+                            800: '#17243e',
+                            700: '#233658',
+                            600: '#344c77',
+                            accent: '#ff5e1a',
+                            cyan: '#00e5ff',
+                            amber: '#ffb300',
+                            wave: '#00ffaa'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans TC', 'sans-serif'],
+                        tech: ['Chakra Petch', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Space Grotesk', 'Noto Sans TC', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-deep: #060a12;
+            --bg-card: rgba(16, 26, 46, 0.85);
+            --border-color: rgba(52, 76, 119, 0.45);
+            --accent-orange: #ff5e1a;
+            --accent-cyan: #00e5ff;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+            --seismic-grid: rgba(0, 229, 255, 0.04);
+            --card-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        body.light {
+            --bg-deep: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --border-color: rgba(203, 213, 225, 0.9);
+            --accent-orange: #ea580c;
+            --accent-cyan: #0284c7;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --seismic-grid: rgba(2, 132, 199, 0.05);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.8;
+            background-image: 
+                linear-gradient(var(--seismic-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--seismic-grid) 1px, transparent 1px);
+            background-size: 24px 24px;
+            scroll-behavior: smooth;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); }
+        ::-webkit-scrollbar-thumb { background: #233658; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #ff5e1a; }
+
+        /* Canvas */
+        .seismic-header-canvas {
+            width: 100%;
+            height: 150px;
+            display: block;
+        }
+
+        /* Typography */
+        .heading-1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            margin-top: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid rgba(255, 94, 26, 0.35);
+            padding-bottom: 0.75rem;
+            letter-spacing: -0.02em;
+        }
+        body.light .heading-1 { color: #0f172a; border-color: rgba(234, 88, 12, 0.3); }
+
+        .heading-2 {
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-top: 3.25rem;
+            margin-bottom: 1.25rem;
+            color: #f8fafc;
+            position: relative;
+            padding-left: 1.1rem;
+            border-left: 4px solid var(--accent-orange);
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        body.light .heading-2 { color: #1e293b; }
+
+        .heading-3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 0.85rem;
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        body.light .heading-3 { color: #0284c7; }
+
+        .heading-4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+            color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+        }
+        body.light .heading-4 { color: #334155; }
+
+        .h-anchor {
+            opacity: 0;
+            margin-left: 0.5rem;
+            font-size: 0.85em;
+            color: var(--accent-orange);
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+        h1:hover .h-anchor, h2:hover .h-anchor, h3:hover .h-anchor, h4:hover .h-anchor {
+            opacity: 1;
+        }
+
+        .case-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.15rem 0.6rem;
+            background: linear-gradient(135deg, rgba(255, 94, 26, 0.2), rgba(239, 68, 68, 0.25));
+            border: 1px solid rgba(255, 94, 26, 0.45);
+            color: #ff8c5a;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+        }
+
+        .seismic-p {
+            margin-bottom: 1.15rem;
+            color: var(--text-main);
+            font-size: 1.02rem;
+            line-height: 1.85;
+        }
+
+        /* Lists */
+        .seismic-ul {
+            list-style-type: none;
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        .seismic-ul > li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+        .seismic-ul > li::before {
+            content: "◆";
+            position: absolute;
+            left: -1.25rem;
+            color: var(--accent-orange);
+            font-size: 0.65rem;
+            top: 0.45rem;
+        }
+        .seismic-ul-nested {
+            list-style-type: none;
+            padding-left: 1.5rem;
+            margin: 0.35rem 0;
+            border-left: 1px dashed rgba(52, 76, 119, 0.5);
+        }
+        .seismic-ul-nested > li {
+            position: relative;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+            font-size: 0.96rem;
+        }
+        .seismic-ul-nested > li::before {
+            content: "▹";
+            position: absolute;
+            left: -1.1rem;
+            color: var(--accent-cyan);
+            font-size: 0.75rem;
+            top: 0.25rem;
+        }
+
+        /* Callouts */
+        .seismic-callout {
+            border-radius: 12px;
+            padding: 1.35rem 1.6rem;
+            margin: 1.75rem 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            position: relative;
+            box-shadow: var(--card-shadow);
+            backdrop-filter: blur(12px);
+        }
+        .seismic-callout.callout-warning {
+            border-left: 4px solid #f59e0b;
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.09), rgba(16, 26, 46, 0.95));
+        }
+        .seismic-callout.callout-quote {
+            border-left: 4px solid #ff5e1a;
+            background: linear-gradient(135deg, rgba(255, 94, 26, 0.09), rgba(16, 26, 46, 0.95));
+        }
+        .seismic-callout.callout-info {
+            border-left: 4px solid #00e5ff;
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.08), rgba(16, 26, 46, 0.95));
+        }
+        .seismic-callout.callout-correction {
+            border-left: 4px solid #10b981;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.09), rgba(16, 26, 46, 0.95));
+        }
+        .callout-header {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.65rem;
+            font-family: 'JetBrains Mono', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .callout-warning .callout-header { color: #fbbf24; }
+        .callout-quote .callout-header { color: #ff7844; }
+        .callout-info .callout-header { color: #38bdf8; }
+        .callout-correction .callout-header { color: #34d399; }
+        .callout-body {
+            font-size: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Table Design */
+        .table-responsive {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            box-shadow: var(--card-shadow);
+        }
+        .seismic-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.94rem;
+        }
+        .seismic-table thead {
+            background: rgba(35, 54, 88, 0.85);
+            border-bottom: 2px solid var(--accent-orange);
+        }
+        .seismic-table th {
+            padding: 1rem 1.25rem;
+            font-weight: 700;
+            color: #f8fafc;
+            letter-spacing: 0.03em;
+            white-space: nowrap;
+        }
+        .seismic-table td {
+            padding: 0.9rem 1.25rem;
+            border-bottom: 1px solid rgba(52, 76, 119, 0.3);
+            color: var(--text-main);
+            vertical-align: top;
+        }
+        .seismic-table tbody tr:hover {
+            background: rgba(255, 94, 26, 0.06);
+        }
+        body.light .seismic-table thead {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+        body.light .seismic-table th { color: #0f172a; }
+
+        /* Timestamps */
+        .time-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            background: rgba(255, 94, 26, 0.15);
+            color: #ff8c5a;
+            border: 1px solid rgba(255, 94, 26, 0.4);
+            padding: 0.1rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            cursor: pointer;
+        }
+        .time-badge:hover {
+            background: #ff5e1a;
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 10px rgba(255, 94, 26, 0.4);
+        }
+
+        /* Code & Pre */
+        .code-container {
+            background: #070b13;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .code-header {
+            background: #101a2e;
+            padding: 0.55rem 0.95rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .code-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+        .code-dot.red { background: #ef4444; }
+        .code-dot.yellow { background: #f59e0b; }
+        .code-dot.green { background: #10b981; }
+        .code-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+        .code-container pre {
+            padding: 1.1rem 1.4rem;
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            color: #38bdf8;
+        }
+
+        .seismic-inline-code {
+            background: rgba(35, 54, 88, 0.5);
+            color: #38bdf8;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            border-radius: 4px;
+            padding: 0.15rem 0.45rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88em;
+        }
+        body.light .seismic-inline-code {
+            background: #f1f5f9;
+            color: #0369a1;
+            border-color: #cbd5e1;
+        }
+
+        /* Divider */
+        .seismic-divider {
+            border: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 94, 26, 0.4), transparent);
+            margin: 3.5rem 0;
+        }
+
+        /* Sidebar TOC */
+        .toc-sidebar {
+            position: sticky;
+            top: 5rem;
+            max-height: calc(100vh - 6.5rem);
+            overflow-y: auto;
+        }
+        .toc-list { list-style: none; padding-left: 0; margin: 0; }
+        .toc-item { margin-bottom: 0.2rem; }
+        .toc-link {
+            display: flex;
+            align-items: baseline;
+            padding: 0.35rem 0.6rem;
+            border-radius: 6px;
+            color: #94a3b8;
+            font-size: 0.865rem;
+            text-decoration: none;
+            transition: all 0.2s;
+            line-height: 1.45;
+        }
+        .toc-link:hover {
+            color: #ff8c5a;
+            background: rgba(255, 94, 26, 0.08);
+        }
+        .toc-link.active {
+            color: #ffffff;
+            background: rgba(255, 94, 26, 0.2);
+            border-left: 3px solid var(--accent-orange);
+            font-weight: 600;
+        }
+        .toc-h2 { margin-top: 0.45rem; font-weight: 600; }
+        .toc-h3 { padding-left: 1.1rem; font-size: 0.81rem; opacity: 0.85; }
+        .toc-bullet {
+            width: 6px;
+            height: 6px;
+            background: #ff5e1a;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+            display: inline-block;
+            flex-shrink: 0;
+        }
+
+        /* Reading Progress */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff5e1a, #00e5ff, #00ffaa);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s ease-out;
+            box-shadow: 0 0 12px rgba(0, 229, 255, 0.8);
+        }
+
+        /* Station Pulse */
+        .pulse-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 8px #10b981;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.35; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Print styles */
+        @media print {
+            header, .toc-sidebar, #videoPlayerContainer, #backToTopBtn, #seismographCanvas, .no-print {
+                display: none !important;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-size: 11pt;
+            }
+            .article-content {
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+            }
+            .seismic-callout {
+                border: 1px solid #ccc !important;
+                background: #f9f9f9 !important;
+                color: #000 !important;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Top Reading Progress Indicator -->
+    <div id="progress-bar"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-[#060a12]/95 backdrop-blur-md border-b border-[#233658]/70">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <a href="#" class="flex items-center gap-2.5 text-white hover:opacity-90 transition">
+                    <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center text-white shadow-lg shadow-orange-500/25">
+                        <i class="fa-solid fa-wave-square text-base"></i>
+                    </div>
+                    <div>
+                        <span class="font-tech text-lg font-bold tracking-wider text-white flex items-center gap-2">
+                            SEISMO-FORENSICS <span class="text-[10px] font-normal text-orange-400 border border-orange-500/40 px-1.5 py-0.2 rounded font-mono">OBS-01</span>
+                        </span>
+                        <p class="text-[11px] text-slate-400 font-mono hidden sm:block">爆炸地震學 · 梁文宗老師 講座完整紀錄</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Controls -->
+            <div class="flex items-center gap-2 sm:gap-4">
+                <!-- Video sync toggle button -->
+                <button id="toggleVideoBtn" class="flex items-center gap-1.5 px-3 py-1.5 bg-red-600/20 hover:bg-red-600 border border-red-500/40 text-red-400 hover:text-white rounded-md text-xs font-semibold transition">
+                    <i class="fa-brands fa-youtube"></i>
+                    <span class="hidden sm:inline">對照演講影片</span>
+                    <span class="sm:hidden">影片</span>
+                </button>
+
+                <!-- Search -->
+                <div class="relative hidden md:block w-48 lg:w-60">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                    <input type="text" id="searchInput" placeholder="搜尋筆記關鍵字..." class="w-full pl-8 pr-3 py-1.5 text-xs bg-slate-900/90 border border-slate-700 rounded-full text-slate-200 placeholder-slate-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500">
+                </div>
+
+                <!-- Theme Toggle -->
+                <button id="themeToggle" class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition" title="切換深色/淺色主題">
+                    <i class="fa-solid fa-moon text-sm"></i>
+                </button>
+
+                <!-- Mobile Menu -->
+                <button id="mobileTocToggle" class="lg:hidden p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800">
+                    <i class="fa-solid fa-bars text-base"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Embedded YouTube Player Panel (Collapsible) -->
+    <div id="videoPlayerContainer" class="hidden bg-[#0a0f1d] border-b border-[#233658] py-4 transition-all duration-300">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-2 text-xs font-mono text-slate-300">
+                    <span class="pulse-indicator"></span>
+                    <span class="font-bold text-orange-400">YOUTUBE SYNC PLAYER</span>
+                    <span class="text-slate-500">| 點擊文章中任一 [時間戳記] 即可立即跳轉至該秒數</span>
+                </div>
+                <button id="closeVideoBtn" class="text-slate-400 hover:text-white text-xs px-2 py-1 rounded bg-slate-800">
+                    <i class="fa-solid fa-xmark mr-1"></i>收起影片
+                </button>
+            </div>
+            <div class="aspect-video w-full rounded-xl overflow-hidden border border-slate-700 shadow-2xl bg-black">
+                <iframe id="lectureIframe" class="w-full h-full" src="https://www.youtube-nocookie.com/embed/EPydk3P_k78?enablejsapi=1" title="演講錄影" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero / Seismograph Banner -->
+    <div class="relative bg-gradient-to-b from-[#0b1220] to-[#060a12] border-b border-[#233658]/50 overflow-hidden">
+        <!-- Interactive Seismograph Canvas -->
+        <div class="relative w-full">
+            <canvas id="seismographCanvas" class="seismic-header-canvas"></canvas>
+            <div class="absolute bottom-2.5 right-4 flex items-center gap-2">
+                <button id="blastTriggerBtn" class="px-3.5 py-1.5 text-xs font-tech font-bold bg-orange-600 hover:bg-orange-500 text-white rounded-md shadow-lg shadow-orange-600/30 flex items-center gap-2 transition transform active:scale-95">
+                    <i class="fa-solid fa-burst"></i> 觸發模擬人工炸測 (TRIGGER BLAST WAVE)
+                </button>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+            <!-- Telemetry Badges -->
+            <div class="flex flex-wrap gap-2 sm:gap-3 mb-6">
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded text-xs font-mono text-slate-300">
+                    <span class="pulse-indicator"></span>
+                    <span>NET: BATS / CWB / WWSSN</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded text-xs font-mono text-slate-300">
+                    <i class="fa-solid fa-satellite-dish text-cyan-400"></i>
+                    <span>SAMPLE: 100 Hz</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded text-xs font-mono text-slate-300">
+                    <i class="fa-solid fa-filter text-amber-400"></i>
+                    <span>BAND: 0.1 – 20 Hz (OPTIMAL 5 Hz)</span>
+                </div>
+                <div class="inline-flex items-center gap-2 px-2.5 py-1 bg-slate-900/80 border border-slate-700 rounded text-xs font-mono text-slate-300">
+                    <i class="fa-solid fa-location-dot text-red-400"></i>
+                    <span>TAIPEI CITY UNIV · 25.034°N</span>
+                </div>
+            </div>
+
+            <!-- Title & Subtitle -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-4 font-display">
+                爆炸地震學 <span class="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-red-500 to-amber-300">Forensic Seismology</span>
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-300 font-normal max-w-4xl leading-relaxed mb-6">
+                從觀測角度看非天然地震：地殼導波、核爆辨識、TIGER 炸測實驗與法醫地震學之科學推演
+            </p>
+
+            <!-- Metadata Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+                <div class="bg-[#101a2e]/90 border border-[#233658] rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm shadow-md">
+                    <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-400 flex items-center justify-center text-lg flex-shrink-0">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-mono">主講人</div>
+                        <div class="font-bold text-white text-sm">梁文宗 老師</div>
+                        <div class="text-xs text-slate-400">中研院 地球科學研究所</div>
+                    </div>
+                </div>
+
+                <div class="bg-[#101a2e]/90 border border-[#233658] rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm shadow-md">
+                    <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center text-lg flex-shrink-0">
+                        <i class="fa-solid fa-calendar-days"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-mono">演講日期</div>
+                        <div class="font-bold text-white text-sm">2026 年 11 月 18 日</div>
+                        <div class="text-xs text-slate-400">臺北市立大學 地生系</div>
+                    </div>
+                </div>
+
+                <div class="bg-[#101a2e]/90 border border-[#233658] rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm shadow-md">
+                    <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center text-lg flex-shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-mono">核心角色</div>
+                        <div class="font-bold text-white text-sm">沉默的目擊者</div>
+                        <div class="text-xs text-slate-400">Silent Witness 法庭證據</div>
+                    </div>
+                </div>
+
+                <div class="bg-[#101a2e]/90 border border-[#233658] rounded-xl p-4 flex items-center gap-3 backdrop-blur-sm shadow-md">
+                    <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg flex-shrink-0">
+                        <i class="fa-solid fa-database"></i>
+                    </div>
+                    <div>
+                        <div class="text-xs text-slate-400 font-mono">文字考證</div>
+                        <div class="font-bold text-white text-sm">7.4 萬字音頻校勘</div>
+                        <div class="text-xs text-slate-400">含 31 分鐘專題實錄</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Seismology Infographic Banner -->
+    <div class="bg-[#090e18] border-b border-[#1c2942] py-3.5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-wrap items-center justify-between gap-4 text-xs font-mono text-slate-400">
+                <div class="flex items-center gap-2">
+                    <span class="text-orange-400 font-bold">⚡ 核心波相：</span>
+                    <span class="bg-slate-800/80 px-2 py-0.5 rounded text-slate-200">Pg (直達花崗岩)</span>
+                    <span class="bg-slate-800/80 px-2 py-0.5 rounded text-slate-200">Pn (莫荷面高速路)</span>
+                    <span class="bg-slate-800/80 px-2 py-0.5 rounded text-slate-200">Lg (地殼導波 3.0~3.6 km/s)</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-cyan-400 font-bold">📐 物理共振：</span>
+                    <span class="text-slate-300">λ/2 = 35km (20秒表面波)</span>
+                    <span class="text-slate-600">|</span>
+                    <span class="text-slate-300">約化速度 6 km/s</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Layout -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            
+            <!-- Sticky Sidebar: Table of Contents -->
+            <aside class="hidden lg:block lg:col-span-3">
+                <div class="toc-sidebar bg-[#0b1220]/85 border border-[#233658]/60 rounded-xl p-4 backdrop-blur-md shadow-lg">
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-slate-700/60">
+                        <div class="flex items-center gap-2 text-xs font-tech font-bold uppercase tracking-wider text-orange-400">
+                            <i class="fa-solid fa-compass"></i> 快速導航目錄
+                        </div>
+                        <span class="text-[10px] text-slate-500 font-mono">SCROLLSPY</span>
+                    </div>
+                    <ul class="toc-list" id="desktopToc">
+                        <li class="toc-item toc-h2"><a href="#資料來源與說明" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">資料來源與說明</span></a></li>
+<li class="toc-item toc-h2"><a href="#目錄" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">目錄</span></a></li>
+<li class="toc-item toc-h2"><a href="#一-講座大綱" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">一、講座大綱</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-1-五段式大綱" class="toc-link"><span class="toc-text">1-1 五段式大綱</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-2-核心概念-地震儀是「沉默的目擊者」" class="toc-link"><span class="toc-text">1-2 核心概念：地震儀是「沉默的目擊者」</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-3-為什麼用「速度」而不是「加速度」" class="toc-link"><span class="toc-text">1-3 為什麼用「速度」而不是「加速度」</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-4-會產生地震訊號的震源分類" class="toc-link"><span class="toc-text">1-4 會產生地震訊號的震源分類</span></a></li>
+<li class="toc-item toc-h2"><a href="#二-演講內容紀錄" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">二、演講內容紀錄</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-1-開場-為什麼要研究爆炸" class="toc-link"><span class="toc-text">2-1 開場：為什麼要研究爆炸</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-2-法醫地震學與六個實例" class="toc-link"><span class="toc-text">2-2 法醫地震學與六個實例</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-3-核爆監測的歷史與辨識原理" class="toc-link"><span class="toc-text">2-3 核爆監測的歷史與辨識原理</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-4-震波相位-pg-pn-lg" class="toc-link"><span class="toc-text">2-4 震波相位：Pg、Pn、Lg</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-5-為什麼表面波規模用「20-秒」定義" class="toc-link"><span class="toc-text">2-5 為什麼表面波規模用「20 秒」定義</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-6-衰減異常-折射造成的聚焦與散焦" class="toc-link"><span class="toc-text">2-6 衰減異常：折射造成的聚焦與散焦</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-7-tiger-炸測實驗-2006–2009" class="toc-link"><span class="toc-text">2-7 TIGER 炸測實驗（2006–2009）</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-8-資料處理-count-儀器響應與-snr" class="toc-link"><span class="toc-text">2-8 資料處理：count、儀器響應與 SNR</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-9-地動衰減經驗式與正演模擬" class="toc-link"><span class="toc-text">2-9 地動衰減經驗式與正演模擬</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-10-應用-2014-高雄氣爆規模反推" class="toc-link"><span class="toc-text">2-10 應用：2014 高雄氣爆規模反推</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-11-結論" class="toc-link"><span class="toc-text">2-11 結論</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-12-現場補充-氣象署的兩個故事" class="toc-link"><span class="toc-text">2-12 現場補充：氣象署的兩個故事</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-13-q&a-multiple-與-lg-波的差別" class="toc-link"><span class="toc-text">2-13 Q&A：Multiple 與 Lg 波的差別</span></a></li>
+<li class="toc-item toc-h2"><a href="#三-學生專題分享與老師回饋-錄影限定內容" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">三、學生專題分享與老師回饋（錄影限定內容）</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-1-專題題目與目標" class="toc-link"><span class="toc-text">3-1 專題題目與目標</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-2-四大類研究案例" class="toc-link"><span class="toc-text">3-2 四大類研究案例</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-3-分析流程" class="toc-link"><span class="toc-text">3-3 分析流程</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-4-主要成果" class="toc-link"><span class="toc-text">3-4 主要成果</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-5-學生提出的問題" class="toc-link"><span class="toc-text">3-5 學生提出的問題</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-6-梁老師的回饋-方法論建議-極具參考價值" class="toc-link"><span class="toc-text">3-6 梁老師的回饋（方法論建議，極具參考價值）</span></a></li>
+<li class="toc-item toc-h2"><a href="#四-課程事務與暑期研究計畫" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">四、課程事務與暑期研究計畫</span></a></li>
+<li class="toc-item toc-h3"><a href="#4-1-作業與教材" class="toc-link"><span class="toc-text">4-1 作業與教材</span></a></li>
+<li class="toc-item toc-h3"><a href="#4-2-中研院地球所暑期研究計畫" class="toc-link"><span class="toc-text">4-2 中研院地球所暑期研究計畫</span></a></li>
+<li class="toc-item toc-h2"><a href="#五-名詞對照表與核心公式" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">五、名詞對照表與核心公式</span></a></li>
+<li class="toc-item toc-h3"><a href="#5-1-名詞對照" class="toc-link"><span class="toc-text">5-1 名詞對照</span></a></li>
+<li class="toc-item toc-h3"><a href="#5-2-核心公式" class="toc-link"><span class="toc-text">5-2 核心公式</span></a></li>
+<li class="toc-item toc-h2"><a href="#六-重點整理" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">六、重點整理</span></a></li>
+<li class="toc-item toc-h2"><a href="#七-影片補充與筆記更正" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">七、影片補充與筆記更正</span></a></li>
+<li class="toc-item toc-h2"><a href="#八-心得" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">八、心得</span></a></li>
+                    </ul>
+                </div>
+            </aside>
+
+            <!-- Main Content Column -->
+            <main class="lg:col-span-9 space-y-8" id="articleBody">
+                
+                <!-- Geological & Wave Physics Visual Infographic Card -->
+                <div class="bg-gradient-to-br from-[#101a2e] to-[#080d18] border border-cyan-500/30 rounded-xl p-5 shadow-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2 text-sm font-bold text-cyan-400 font-tech">
+                            <i class="fa-solid fa-diagram-project"></i> 地球物理剖面圖解：Pg、Pn 與 Lg 波傳播機制
+                        </div>
+                        <span class="text-[11px] bg-cyan-950 text-cyan-300 border border-cyan-800 px-2.5 py-0.5 rounded font-mono">CRUSTAL WAVEGUIDE</span>
+                    </div>
+                    <div class="w-full bg-[#060a12] border border-slate-800 rounded-lg p-3 overflow-x-auto text-center">
+                        <svg viewBox="0 0 760 220" class="w-full max-w-2xl mx-auto text-xs font-mono">
+                            <!-- Background Crust & Mantle -->
+                            <rect x="20" y="30" width="720" height="90" fill="#17243e" rx="4"/>
+                            <rect x="20" y="120" width="720" height="80" fill="#0d1424" rx="4"/>
+                            
+                            <!-- Labels -->
+                            <text x="35" y="50" fill="#94a3b8" font-size="11">地表 (Surface / Granite Layer)</text>
+                            <text x="35" y="110" fill="#38bdf8" font-size="11">大陸地殼 (Crust ~30-35 km, S波 ≈ 3.5 km/s)</text>
+                            <text x="35" y="145" fill="#f59e0b" font-size="11">莫荷面 (Moho Discontinuity)</text>
+                            <text x="35" y="180" fill="#ef4444" font-size="11">上部地函 (Upper Mantle 高速層 > 8 km/s)</text>
+
+                            <!-- Blast Source -->
+                            <circle cx="80" cy="35" r="7" fill="#ff5e1a"/>
+                            <text x="95" y="38" fill="#ff5e1a" font-weight="bold">爆炸震源 (Blast Source)</text>
+
+                            <!-- Pg Wave (Surface direct) -->
+                            <path d="M 80 35 L 500 35" stroke="#00e5ff" stroke-width="2.5" stroke-dasharray="4,2"/>
+                            <text x="300" y="25" fill="#00e5ff" font-weight="bold">Pg 波 (沿地表直達)</text>
+
+                            <!-- Pn Wave (Moho headwave) -->
+                            <path d="M 80 35 L 180 120 L 520 120 L 620 35" stroke="#f59e0b" stroke-width="2.5"/>
+                            <text x="320" y="115" fill="#f59e0b" font-weight="bold">Pn 波 (沿莫荷面折射，走高速公路)</text>
+
+                            <!-- Lg Wave (Multiple bouncing in crust) -->
+                            <path d="M 80 35 L 140 120 L 200 35 L 260 120 L 320 35 L 380 120 L 440 35 L 500 120 L 560 35" stroke="#ff5e1a" stroke-width="2"/>
+                            <text x="340" y="75" fill="#ff5e1a" font-weight="bold">Lg 波串 (地殼導波層多次反射干涉 3.0~3.6 km/s)</text>
+
+                            <!-- Receiver Station -->
+                            <polygon points="620,35 610,15 630,15" fill="#10b981"/>
+                            <text x="600" y="10" fill="#10b981" font-weight="bold">觀測測站 (Station)</text>
+                        </svg>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2.5 leading-relaxed">
+                        ★ <strong>速度與相位特性解析</strong>：近距離時 Pg 走直達路徑先到；當震央距離超過臨界距後，沿高速地函傳播的 Pn 反而先抵達；Lg 則受大陸地殼厚度（約 35 km）侷限，在波導層內多次反射疊加形成長週期波串。
+                    </p>
+                </div>
+
+                <!-- Interactive 20-Second Resonance Calculator Card -->
+                <div class="bg-gradient-to-br from-[#101a2e] to-[#0b1220] border border-amber-500/30 rounded-xl p-5 shadow-xl">
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="flex items-center gap-2 text-sm font-bold text-amber-400 font-tech">
+                            <i class="fa-solid fa-calculator"></i> 互動推演：為什麼表面波規模（Ms）用「20 秒」定義？（笛子半波長共振模型）
+                        </div>
+                        <span class="text-[11px] bg-amber-950 text-amber-300 border border-amber-800 px-2.5 py-0.5 rounded font-mono">STRUCTURAL FILTER</span>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono bg-[#060a12] p-4 rounded-lg border border-slate-800">
+                        <div>
+                            <label class="block text-slate-400 mb-1">地殼平均 S 波速度 (v):</label>
+                            <div class="flex items-center gap-2">
+                                <input type="range" id="velSlider" min="2.8" max="4.0" step="0.1" value="3.5" class="w-full accent-orange-500">
+                                <span id="velVal" class="text-orange-400 font-bold text-sm w-16">3.5 km/s</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">表面波週期 (T):</label>
+                            <div class="flex items-center gap-2">
+                                <input type="range" id="periodSlider" min="10" max="30" step="1" value="20" class="w-full accent-cyan-500">
+                                <span id="periodVal" class="text-cyan-400 font-bold text-sm w-14">20 s</span>
+                            </div>
+                        </div>
+                        <div class="bg-[#101a2e] p-2.5 rounded border border-slate-700 flex flex-col justify-center">
+                            <div class="text-slate-400 text-[11px]">全波長 λ = v × T: <span id="waveLenVal" class="text-white font-bold">70.0 km</span></div>
+                            <div class="text-amber-400 font-bold text-[13px] mt-0.5">半波長共振厚度: <span id="halfWaveVal" class="text-amber-300">35.0 km</span></div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-2.5">
+                        💡 <strong>結論</strong>：當週期為 20 秒、地殼 S 波速約 3.5 km/s 時，波長為 70 km，其半波長剛好為 35 km，完美吻合<strong>全球大陸地殼平均厚度（30~35 km）</strong>。地殼就像兩端開放的笛子管身，產生基頻駐波共振，因此 20 秒能量最強，被全球地震學界選為表面波規模定義標準。
+                    </p>
+                </div>
+
+                <!-- Markdown Content Injected Here -->
+                <div class="article-content bg-[#0b1220]/75 border border-[#233658]/50 rounded-xl p-6 sm:p-10 shadow-2xl backdrop-blur-sm">
+                    
+<h1 id="地震講座紀錄與心得" class="heading-1"><span class="h-icon"><i class="fa-solid fa-earth-asia"></i></span> 地震講座紀錄與心得 <a href="#地震講座紀錄與心得" class="h-anchor">#</a></h1>
+
+
+<p class="seismic-p"><strong>講題：爆炸地震學（Forensic Seismology：從觀測角度看非天然地震）</strong></p>
+
+<p class="seismic-p"><strong>講者：梁文宗 老師（中央研究院 地球科學研究所）</strong></p>
+
+<p class="seismic-p"><strong>時間：2026 年 11 月 18 日（三）上午 10:03</strong></p>
+
+<p class="seismic-p"><strong>地點：臺北市立大學（地球環境暨生物資源學系）</strong></p>
+
+<p class="seismic-p"><strong>影片：<a href="https://youtu.be/EPydk3P_k78" target="_blank" rel="noopener noreferrer" class="ext-link">https://youtu.be/EPydk3P_k78 <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a>（片長 1:58:39，上傳者 DaYi Chen）</strong></p>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="資料來源與說明" class="heading-2">資料來源與說明 <a href="#資料來源與說明" class="h-anchor">#</a></h2>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>來源</th>
+<th>內容</th>
+<th>用途</th>
+</tr></thead><tbody>
+<tr>
+<td>現場筆記 PDF（21 頁，約 2.6 萬字）</td>
+<td>AI 產生的摘要 + 部分逐字稿</td>
+<td>架構與重點</td>
+</tr>
+<tr>
+<td>YouTube 完整錄影（1:58:39）</td>
+<td>無字幕，已在本機以語音辨識轉錄（3,165 句，約 7.4 萬字）</td>
+<td>補齊缺漏段落、校正數字、還原問答與學生分享</td>
+</tr>
+<tr>
+<td><code class="seismic-inline-code">心得.txt</code></td>
+<td>本人撰寫之心得</td>
+<td>第五節原文引用</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<div class="seismic-callout callout-warning"><div class="callout-header"><i class="fa-solid fa-triangle-exclamation"></i><span>閱讀提醒 (READING NOTE)</span></div><div class="callout-body"><p class="my-1.5"><strong>閱讀提醒</strong></p><div class="flex items-start gap-2 my-1"><span class="text-orange-400 font-mono text-xs mt-1">▶</span><div>1. 文中 <strong>[hh:mm:ss]</strong> 為影片時間碼，可對照錄影畫面。</div></div><div class="flex items-start gap-2 my-1"><span class="text-orange-400 font-mono text-xs mt-1">▶</span><div>2. 專有名詞依錄音辨識，少數人名、地名可能仍有誤，已在該處標註「（錄音辨識）」。</div></div><div class="flex items-start gap-2 my-1"><span class="text-orange-400 font-mono text-xs mt-1">▶</span><div>3. 講者口誤（如北韓 2006 年說成「4.03」、Lg 波速度前後講反）已於文中更正並註明。</div></div></div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="目錄" class="heading-2">目錄 <a href="#目錄" class="h-anchor">#</a></h2>
+
+<ul class="seismic-ul">
+<li><a href="#一講座大綱" class="anchor-link">一、講座大綱</a></li>
+<li><a href="#二演講內容紀錄" class="anchor-link">二、演講內容紀錄</a></li>
+<ul class="seismic-ul-nested">
+<li><a href="#2-1-開場為什麼要研究爆炸" class="anchor-link">2-1 開場：為什麼要研究爆炸</a></li>
+<li><a href="#2-2-法醫地震學與六個實例" class="anchor-link">2-2 法醫地震學與六個實例</a></li>
+<li><a href="#2-3-核爆監測的歷史與辨識原理" class="anchor-link">2-3 核爆監測的歷史與辨識原理</a></li>
+<li><a href="#2-4-震波相位pgpnlg" class="anchor-link">2-4 震波相位：Pg、Pn、Lg</a></li>
+<li><a href="#2-5-為什麼表面波規模用20-秒定義" class="anchor-link">2-5 為什麼表面波規模用「20 秒」定義</a></li>
+<li><a href="#2-6-衰減異常折射造成的聚焦與散焦" class="anchor-link">2-6 衰減異常：折射造成的聚焦與散焦</a></li>
+<li><a href="#2-7-tiger-炸測實驗20062009" class="anchor-link">2-7 TIGER 炸測實驗</a></li>
+<li><a href="#2-8-資料處理count儀器響應與-snr" class="anchor-link">2-8 資料處理：count、儀器響應與 SNR</a></li>
+<li><a href="#2-9-地動衰減經驗式與正演模擬" class="anchor-link">2-9 地動衰減經驗式與正演模擬</a></li>
+<li><a href="#2-10-應用2014-高雄氣爆規模反推" class="anchor-link">2-10 應用：2014 高雄氣爆規模反推</a></li>
+<li><a href="#2-11-結論" class="anchor-link">2-11 結論</a></li>
+<li><a href="#2-12-現場補充氣象署的兩個故事" class="anchor-link">2-12 現場補充：氣象署的兩個故事</a></li>
+<li><a href="#2-13-qa-multiple-與-lg-波的差別" class="anchor-link">2-13 Q&A：Multiple 與 Lg 波的差別</a></li>
+</ul>
+<li><a href="#三學生專題分享與老師回饋錄影限定內容" class="anchor-link">三、學生專題分享與老師回饋</a></li>
+<li><a href="#四課程事務與暑期研究計畫" class="anchor-link">四、課程事務與暑期研究計畫</a></li>
+<li><a href="#五名詞對照表與核心公式" class="anchor-link">五、名詞對照表與核心公式</a></li>
+<li><a href="#六重點整理" class="anchor-link">六、重點整理</a></li>
+<li><a href="#七影片補充與筆記更正" class="anchor-link">七、影片補充與筆記更正</a></li>
+<li><a href="#八心得" class="anchor-link">八、心得</a></li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="一-講座大綱" class="heading-2">一、講座大綱 <a href="#一-講座大綱" class="h-anchor">#</a></h2>
+
+
+<p class="seismic-p">講者刻意<strong>不從地震學理論出發</strong>，而是「從觀測角度直接下手」，因為比較直覺。主題定為<strong>爆炸地震學</strong>，處理「不是地震的地震觀測」——包含爆炸、坍塌、音爆、氣爆、注水誘發地震等<strong>非天然震源</strong>。</p>
+
+
+<h3 id="1-1-五段式大綱" class="heading-3">1-1 五段式大綱 <a href="https://youtu.be/EPydk3P_k78?t=130s" data-seek="130" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:02:10]"><i class="fa-brands fa-youtube text-red-400"></i> [00:02:10]</a> <a href="#1-1-五段式大綱" class="h-anchor">#</a></h3>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>順序</th>
+<th>主題</th>
+<th>內容</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>法醫地震學</td>
+<td>什麼是爆炸？如何從訊號反推事件</td>
+</tr>
+<tr>
+<td>2</td>
+<td>北韓核試爆</td>
+<td>2006–2017 核爆監測與辨識</td>
+</tr>
+<tr>
+<td>3</td>
+<td>台灣 TIGER 炸測實驗</td>
+<td>2006–2009 可控震源觀測計畫</td>
+</tr>
+<tr>
+<td>4</td>
+<td>地動衰減經驗式</td>
+<td>PGV 隨距離、規模的衰減關係</td>
+</tr>
+<tr>
+<td>5</td>
+<td>應用與結論</td>
+<td>高雄氣爆規模反推、區域性修正</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h3 id="1-2-核心概念-地震儀是「沉默的目擊者」" class="heading-3">1-2 核心概念：地震儀是「沉默的目擊者」 <a href="https://youtu.be/EPydk3P_k78?t=192s" data-seek="192" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:03:12]"><i class="fa-brands fa-youtube text-red-400"></i> [00:03:12]</a> <a href="#1-2-核心概念-地震儀是「沉默的目擊者」" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p">在沒有目擊證人的情況下，只要振動訊號被地震儀記錄下來，地震儀就是一個<strong>沉默的目擊者（silent witness）</strong>。它不說話，但透過分析可以萃取：</p>
+
+<ul class="seismic-ul">
+<li>爆炸的<strong>大小</strong>（規模、炸藥當量）</li>
+<li>爆炸的<strong>歷程</strong>（漏氣 → 燃燒 → 爆炸 → 關閥）</li>
+<li>當時<strong>到底發生了什麼事</strong></li>
+</ul>
+
+
+<p class="seismic-p">這些分析若「有憑有據」，可以在法庭上被法官接受，成為科學證據。</p>
+
+
+<div class="seismic-callout callout-quote"><div class="callout-header"><i class="fa-solid fa-gavel"></i><span>法醫地震學核心箴言</span></div><div class="callout-body"><p class="my-1.5">講者引用前任主任的話：「<strong>學界可以胡說八道，行政單位不行</strong>」——但<strong>胡說八道要有憑有據</strong>，這正是法醫地震學的精神。</p></div></div>
+
+
+<h3 id="1-3-為什麼用「速度」而不是「加速度」" class="heading-3">1-3 為什麼用「速度」而不是「加速度」 <a href="https://youtu.be/EPydk3P_k78?t=176s" data-seek="176" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:02:56]"><i class="fa-brands fa-youtube text-red-400"></i> [00:02:56]</a> <a href="#1-3-為什麼用「速度」而不是「加速度」" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p">講者說明：近地表爆炸觀測採用<strong>地表最大速度（PGV）</strong> 建立衰減關係式，理由在後段（2-9）配合濾波與頻帶選擇一併說明。</p>
+
+
+<h3 id="1-4-會產生地震訊號的震源分類" class="heading-3">1-4 會產生地震訊號的震源分類 <a href="https://youtu.be/EPydk3P_k78?t=219s" data-seek="219" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:03:39]"><i class="fa-brands fa-youtube text-red-400"></i> [00:03:39]</a> <a href="#1-4-會產生地震訊號的震源分類" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p"><strong>空中</strong></p>
+<ul class="seismic-ul">
+<li>火流星</li>
+<li>飛機解體</li>
+<li>火山噴發</li>
+<li>噴射機超音速<strong>音爆（shock wave）</strong></li>
+</ul>
+
+
+<p class="seismic-p"><strong>地下／地表</strong></p>
+<ul class="seismic-ul">
+<li>核試爆</li>
+<li>礦坑坍塌（支撐不良）</li>
+<li>地下軍事設施（機械震動）</li>
+<li>意外事件：爆竹工廠、恐攻、油氣管線爆炸</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="二-演講內容紀錄" class="heading-2">二、演講內容紀錄 <a href="#二-演講內容紀錄" class="h-anchor">#</a></h2>
+
+
+<h3 id="2-1-開場-為什麼要研究爆炸" class="heading-3">2-1 開場：為什麼要研究爆炸 <a href="#2-1-開場-為什麼要研究爆炸" class="h-anchor">#</a></h3>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>法庭證據功能</strong>：地震學分析爆炸訊號可作為科學證據，協助釐清責任與賠償。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>釐清紛爭</strong>：爆炸事件常引發爭議（人為還是天然？誰該賠？），地震學可扮演仲裁角色。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed"><strong>技術展示</strong>：完整推演「PGV 隨距離衰減」的關係式及其應用。</div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-2-法醫地震學與六個實例" class="heading-3">2-2 法醫地震學與六個實例 <a href="#2-2-法醫地震學與六個實例" class="h-anchor">#</a></h3>
+
+
+<h4 id="實例一-美國礦坑坍塌-責任歸屬的反轉" class="heading-4"><span class="case-chip">CASE 01 · 責任翻轉</span>實例一：美國礦坑坍塌（責任歸屬的反轉）<a href="https://youtu.be/EPydk3P_k78?t=239s" data-seek="239" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:03:59]"><i class="fa-brands fa-youtube text-red-400"></i> [00:03:59]</a> <a href="#實例一-美國礦坑坍塌-責任歸屬的反轉" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>礦坑坍塌時，附近剛好發生地震。</li>
+<li><strong>礦主主張</strong>：是地震先發生才導致坍塌 → 天然災害，可免除賠償。</li>
+<li><strong>地震學家的分析</strong>：訊號顯示是<strong>坍塌本身</strong>引發規模約 4 點多的訊號，因果關係正好相反。</li>
+<li><strong>結果</strong>：判定為人為事故，礦主須賠償；獲利無法負擔賠償，礦場關閉，十餘名工人未能生還。</li>
+<li><strong>啟示</strong>：同一組波形，因果方向判讀錯誤，法律責任就完全翻轉（天然災害 → 人為災害）。</li>
+</ul>
+
+
+<h4 id="實例二-噴射機音爆-air-coupling" class="heading-4"><span class="case-chip">CASE 02 · 空氣耦合</span>實例二：噴射機音爆（Air Coupling）<a href="https://youtu.be/EPydk3P_k78?t=320s" data-seek="320" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:05:20]"><i class="fa-brands fa-youtube text-red-400"></i> [00:05:20]</a> <a href="#實例二-噴射機音爆-air-coupling" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>超音速飛機的 <strong>shock wave</strong> 壓力極大，撞擊地面後引起地面震盪。</li>
+<li>這種震盪訊號量起來<strong>與地震訊號相當接近</strong>，是典型的<strong>空氣耦合（air coupling）</strong>。</li>
+<li>結論：空中爆炸／音爆確實會引發地面震動，訊號向四面八方傳遞。</li>
+</ul>
+
+
+<h4 id="實例三-1998-年肯亞美國大使館恐攻-反推炸藥量" class="heading-4"><span class="case-chip">CASE 03 · 炸藥反推</span>實例三：1998 年肯亞美國大使館恐攻（反推炸藥量）<a href="https://youtu.be/EPydk3P_k78?t=360s" data-seek="360" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:06:00]"><i class="fa-brands fa-youtube text-red-400"></i> [00:06:00]</a> <a href="#實例三-1998-年肯亞美國大使館恐攻-反推炸藥量" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>美國地震學家 <strong>Keith Koper</strong>（錄音辨識為「Kiss Cooper」）向國科會申請計畫。</li>
+<li>做法：用一部貨車載滿不同當量的 <strong>C4 炸藥</strong>，開到沙漠地區實際引爆，周圍布置大量地震儀。</li>
+<li>比對「實驗訊號」與「恐攻當時鄰近測站訊號」的相似性與差異，<strong>反推</strong>貨車炸藥量。</li>
+<li><strong>方法論意義</strong>：事件已發生、現場可能只有一個測站，必須靠<strong>控制實驗</strong>才能還原真相。</li>
+</ul>
+
+
+<h4 id="實例四-北海俄羅斯核潛艦魚雷爆炸" class="heading-4"><span class="case-chip">CASE 04 · 水下反射</span>實例四：北海俄羅斯核潛艦魚雷爆炸 <a href="https://youtu.be/EPydk3P_k78?t=417s" data-seek="417" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:06:57]"><i class="fa-brands fa-youtube text-red-400"></i> [00:06:57]</a> <a href="#實例四-北海俄羅斯核潛艦魚雷爆炸" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>北海不是地震活動區，各國測站卻收到明顯地震訊號，一度懷疑是否人為。</li>
+<li>俄方第一時間<strong>未對外說明</strong>（知道是自家核潛艦出事），後來才承認並請求協助打撈。</li>
+<li>實情：<strong>Kursk 級核潛艦</strong>的魚雷在水下爆炸。</li>
+<li>訊號特徵：先是一個 <strong>BOOM</strong>，接著是水波的<strong>重複反射</strong>，延續非常長的時間。</li>
+</ul>
+
+
+<h4 id="實例五-美國新墨西哥州油氣管線洩漏爆炸" class="heading-4"><span class="case-chip">CASE 05 · 連續歷程</span>實例五：美國新墨西哥州油氣管線洩漏爆炸 <a href="https://youtu.be/EPydk3P_k78?t=482s" data-seek="482" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:08:02]"><i class="fa-brands fa-youtube text-red-400"></i> [00:08:02]</a> <a href="#實例五-美國新墨西哥州油氣管線洩漏爆炸" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>高壓油氣管線跨過 Snake River（蛇河）橋墩，橋墩旁是著名露營場。</li>
+<li>事件歷程（完整被地震網記錄）：</li>
+</ul>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>階段</th>
+<th>現象</th>
+<th>訊號特徵</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td>管線接頭漏氣（濃度不足，不會點燃）</td>
+<td>管線晃動的低頻訊號</td>
+</tr>
+<tr>
+<td>2</td>
+<td>氣體擴散約 200–300 公尺到露營場</td>
+<td>—</td>
+</tr>
+<tr>
+<td>3</td>
+<td>被<strong>營火點燃</strong>，回火燒回管線</td>
+<td>燃燒震動</td>
+</tr>
+<tr>
+<td>4</td>
+<td>管線大量燃燒 → <strong>爆炸</strong>，炸出比人高三倍以上的坑洞</td>
+<td>爆炸脈衝</td>
+</tr>
+<tr>
+<td>5</td>
+<td>持續大火</td>
+<td>持續震動</td>
+</tr>
+<tr>
+<td>6</td>
+<td>數小時後關閉<strong>第一道閥門</strong>，火勢變小</td>
+<td>訊號下降</td>
+</tr>
+<tr>
+<td>7</td>
+<td>再數小時後關閉<strong>第二道閥門</strong></td>
+<td>訊號慢慢消失</td>
+</tr>
+</tbody>
+</table></div>
+
+<ul class="seismic-ul">
+<li>當時該地佈有<strong>線性觀測網</strong>，把整個過程完整捕捉。</li>
+<li>後續：9 人罹難；律師以「死者臨終前約有 <strong>26 秒</strong>痛苦時間」為由請求高額精神賠償。</li>
+</ul>
+
+
+<h4 id="實例六-南韓地熱電廠注水誘發地震-2017-m5-4" class="heading-4"><span class="case-chip">CASE 06 · 注水誘發</span>實例六：南韓地熱電廠注水誘發地震（2017，<span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.4</span>）<a href="https://youtu.be/EPydk3P_k78?t=651s" data-seek="651" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:10:51]"><i class="fa-brands fa-youtube text-red-400"></i> [00:10:51]</a> <a href="#實例六-南韓地熱電廠注水誘發地震-2017-m5-4" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>地熱開發基本條件：<strong>熱源 + 水</strong>（注水井注水、生產井取熱水）。</li>
+<li>為製造裂隙通道而加壓注水，2017 年注水過程中誘發<strong>規模 5.4</strong> 地震。</li>
+<li>南韓屬相對穩定地塊，<span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.4</span> 幾乎是該國史上數一數二大的地震。</li>
+<li><strong>機制（力學推導）</strong>：</li>
+</ul>
+
+
+<div class="code-container my-5"><div class="code-header"><div class="flex items-center gap-1.5"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div><span class="code-title">📐 地震物理核心公式 (SEISMIC FORMULA)</span></div><pre><code class="language-">斷層滑動條件：剪應力 &gt; 正向壓力 × 摩擦係數
+注水 → 孔隙壓力↑ → 有效正向壓力↓（有效正向壓力 = 正向壓力 − 孔隙壓力）
+→ 摩擦力變小 → 既有剪應力足以克服 → 斷層滑動</code></pre></div>
+
+
+<div class="seismic-callout callout-quote"><div class="callout-header"><i class="fa-solid fa-quote-left"></i><span>講者原音視角 (SPEAKER'S VOICE)</span></div><div class="callout-body"><p class="my-1.5">講者的比喻：本來兩隻手把斷層面夾得很緊，注水等於把兩隻手鬆開。</p></div></div>
+
+<ul class="seismic-ul">
+<li><strong>後果</strong>：電廠關閉、停止開發，賠償約 <strong>500 多萬美元</strong>；無人死亡，主要為房屋倒塌。</li>
+</ul>
+
+
+<h4 id="實例小結-法醫地震學的判斷邏輯" class="heading-4">實例小結：法醫地震學的判斷邏輯 <a href="#實例小結-法醫地震學的判斷邏輯" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>問題</th>
+<th>靠什麼回答</th>
+</tr></thead><tbody>
+<tr>
+<td>是人為還是天然？</td>
+<td>P 波／S 波能量比、體波與表面波規模差、震源機制海灘球</td>
+</tr>
+<tr>
+<td>炸藥量多大？</td>
+<td>以控制實驗建立衰減式後反推</td>
+</tr>
+<tr>
+<td>事件歷程為何？</td>
+<td>連續波形中的階段性訊號（漏氣、燃燒、爆炸、關閥）</td>
+</tr>
+<tr>
+<td>因果方向為何？</td>
+<td>訊號到達時間與規模的因果一致性</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-3-核爆監測的歷史與辨識原理" class="heading-3">2-3 核爆監測的歷史與辨識原理 <a href="#2-3-核爆監測的歷史與辨識原理" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-3-1-歷史背景" class="heading-4">2-3-1 歷史背景 <a href="https://youtu.be/EPydk3P_k78?t=801s" data-seek="801" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:13:21]"><i class="fa-brands fa-youtube text-red-400"></i> [00:13:21]</a> <a href="#2-3-1-歷史背景" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li><strong>1960 年代</strong>：台北設有 <strong>WWSSN</strong>（World-Wide Standardized Seismograph Network）測站，氣象署亦設有測站；背後目的之一是<strong>監測俄國與中國的核試爆</strong>。</li>
+<li>後來成立 <strong>CTBT</strong>（Comprehensive Nuclear-Test-Ban Treaty，全面禁止核子試爆條約）與 <strong>CTBTO</strong> 組織。</li>
+<li><strong>台灣的處境</strong>：非聯合國會員國，無權參與 CTBTO，無法取得完整核試爆檢測資源。</li>
+<li>核試爆「俱樂部」主要成員（依歷史順序）：美國、俄國、法國、英國、中國，之後巴基斯坦、印度，最新加入者為<strong>北韓</strong>。</li>
+</ul>
+
+
+<h4 id="2-3-2-北韓核試爆-2006–2017" class="heading-4">2-3-2 北韓核試爆（2006–2017）<a href="https://youtu.be/EPydk3P_k78?t=1295s" data-seek="1295" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:21:35]"><i class="fa-brands fa-youtube text-red-400"></i> [00:21:35]</a> <a href="#2-3-2-北韓核試爆-2006–2017" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>年份</th>
+<th>規模</th>
+<th>備註</th>
+</tr></thead><tbody>
+<tr>
+<td>2006</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40 text-xs">M4.3</span></td>
+<td>首次核試（講者口誤為「4.03」）</td>
+</tr>
+<tr>
+<td>2009</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40 text-xs">M4.7</span></td>
+<td>講者口誤為「407」</td>
+</tr>
+<tr>
+<td>2013</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.1</span></td>
+<td></td>
+</tr>
+<tr>
+<td>2016</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.1</span></td>
+<td>該年兩次</td>
+</tr>
+<tr>
+<td>2016</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.3</span></td>
+<td></td>
+</tr>
+<tr>
+<td>2017</td>
+<td><strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-red-500/20 text-red-400 border-red-500/40 text-xs">M6.3</span></strong></td>
+<td>震驚全球，各國原以為北韓能力上限在 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5</span> 左右</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>規模與能量</strong>：規模差 1 → 能量約差 <strong>32 倍</strong>（10^1.5）；從 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40 text-xs">M4.3</span> 到 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-red-500/20 text-red-400 border-red-500/40 text-xs">M6.3</span> 規模差 2 → 能量差接近 <strong>100 倍</strong>。</p>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">講者提醒：不要小看北韓，雖然國家不大，核試爆實力不容忽視。</p></div></div>
+
+
+<h4 id="2-3-3-核爆-vs-天然地震的辨識方法-五種" class="heading-4">2-3-3 核爆 vs. 天然地震的辨識方法（五種）<a href="https://youtu.be/EPydk3P_k78?t=909s" data-seek="909" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:15:09]"><i class="fa-brands fa-youtube text-red-400"></i> [00:15:09]</a> <a href="#2-3-3-核爆-vs-天然地震的辨識方法-五種" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>#</th>
+<th>方法</th>
+<th>核爆特徵</th>
+<th>天然地震特徵</th>
+</tr></thead><tbody>
+<tr>
+<td>1</td>
+<td><strong>P 波／S 波強弱</strong></td>
+<td>爆炸為<strong>膨脹源</strong>，P 波強、S 波弱</td>
+<td>斷層<strong>剪切錯動</strong>，S 波強</td>
+</tr>
+<tr>
+<td>2</td>
+<td><strong>體波規模 vs. 表面波規模</strong></td>
+<td>以 P 波為主，<strong>體波規模（mb）偏大</strong></td>
+<td>兩者較接近</td>
+</tr>
+<tr>
+<td>3</td>
+<td><strong>震源機制（海灘球）</strong></td>
+<td>接近<strong>全黑</strong>，代表向四面八方均勻膨脹</td>
+<td>有明顯節面（雙偶極）</td>
+</tr>
+<tr>
+<td>4</td>
+<td><strong>Pg／Lg 能量比（取對數）</strong></td>
+<td>爆炸時 <strong>Pg > Lg</strong>，比值偏高</td>
+<td>Lg 相對較強，比值接近 0</td>
+</tr>
+<tr>
+<td>5</td>
+<td><strong>低頻 Lg 是否被激發</strong></td>
+<td>低頻 Lg 弱、P 波強</td>
+<td>低頻 Lg 明顯</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>補充：震源機制的型態</strong></p>
+
+<ul class="seismic-ul">
+<li><strong>膨脹／塌陷</strong>（體積變大或變小）→ 爆炸、火山噴發</li>
+<li><strong>CLVD</strong>（補償線性偶極）→ 兩手撞擊、上下拉開的極化型態</li>
+<li><strong>剪切</strong>（雙偶極）→ 一般斷層錯動</li>
+<li>注意：<strong>P 波初動</strong>只能判讀斷層錯動型地震；<strong>爆炸源看不到 P 波初動</strong>，必須用<strong>全波形</strong>反演。</li>
+<li>講者預告：海灘球判讀與波形反演留到下學期「地震學」課程。</li>
+</ul>
+
+
+<p class="seismic-p"><strong>觀測站選擇</strong> <a href="https://youtu.be/EPydk3P_k78?t=1142s" data-seek="1142" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:19:02]"><i class="fa-brands fa-youtube text-red-400"></i> [00:19:02]</a></p>
+
+<ul class="seismic-ul">
+<li>中國 <strong>牡丹江站</strong>（錄音辨識；位於黑龍江省）：講者稱讚「很穩定、很安靜、訊號非常漂亮」。</li>
+<li>俄羅斯 <strong>YAK</strong> 站：距北韓約 <strong>2,000 多公里</strong>，作為遠距比較。</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-4-震波相位-pg-pn-lg" class="heading-3">2-4 震波相位：Pg、Pn、Lg <a href="#2-4-震波相位-pg-pn-lg" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-4-1-淺源事件的三種主要相位" class="heading-4">2-4-1 淺源事件的三種主要相位 <a href="https://youtu.be/EPydk3P_k78?t=1171s" data-seek="1171" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:19:31]"><i class="fa-brands fa-youtube text-red-400"></i> [00:19:31]</a> <a href="#2-4-1-淺源事件的三種主要相位" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>相位</th>
+<th>路徑</th>
+<th>特性</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>Pg</strong></td>
+<td>沿地表／花崗岩層直達（g = granite）</td>
+<td>直達波，距離最近</td>
+</tr>
+<tr>
+<td><strong>Pn</strong></td>
+<td>沿<strong>莫荷面（Moho）</strong> 傳遞</td>
+<td>「走高速公路」：路徑較長但速度快，遠距離可能比 Pg <strong>更早到</strong></td>
+</tr>
+<tr>
+<td><strong>Lg</strong></td>
+<td>在地殼<strong>導波層</strong>內，S 波多次反射、干涉</td>
+<td>長波串，速度約 <strong>3.0–3.6 km/s</strong></td>
+</tr>
+</tbody>
+</table></div>
+
+
+<div class="seismic-callout callout-quote"><div class="callout-header"><i class="fa-solid fa-quote-left"></i><span>講者原音視角 (SPEAKER'S VOICE)</span></div><div class="callout-body"><p class="my-1.5">講者的比喻：Pg 走平面道路，Pn 走高速公路——距離遠的時候，走高速公路反而先到。</p></div></div>
+
+
+<h4 id="2-4-2-lg-波的本質" class="heading-4">2-4-2 Lg 波的本質 <a href="https://youtu.be/EPydk3P_k78?t=1233s" data-seek="1233" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:20:33]"><i class="fa-brands fa-youtube text-red-400"></i> [00:20:33]</a> <a href="#2-4-2-lg-波的本質" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>全名概念：<strong>Multiple Reflected S wave in Crustal Waveguide</strong>（地殼導波層中的多次反射 S 波）</li>
+<li>位置：<strong>地表與莫荷面之間</strong>的低速層內，不斷來回彈跳</li>
+<li>機制：多次反射 → <strong>疊加干涉</strong> → 形成很長、很像表面波的波串</li>
+<li>關鍵：Lg <strong>不會進入地殼以下</strong>，只在地殼內傳遞，因此受<strong>地殼厚度</strong>控制</li>
+<li>速度 ≈ 整個地殼的<strong>平均 S 波速度</strong></li>
+<li>全球觀測值 <a href="https://youtu.be/EPydk3P_k78?t=1435s" data-seek="1435" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:23:55]"><i class="fa-brands fa-youtube text-red-400"></i> [00:23:55]</a>：</li>
+</ul>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>地區</th>
+<th>Lg 速度</th>
+</tr></thead><tbody>
+<tr>
+<td>美國</td>
+<td>3.0–3.6 km/s</td>
+</tr>
+<tr>
+<td>日本</td>
+<td>2.8–3.5 km/s</td>
+</tr>
+<tr>
+<td>中國</td>
+<td>3.0–3.6 km/s</td>
+</tr>
+<tr>
+<td>往俄羅斯方向</td>
+<td>3.0–3.5 km/s</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<div class="seismic-callout callout-correction"><div class="callout-header"><i class="fa-solid fa-screwdriver-wrench"></i><span>現場勘誤更新 (CORRECTION)</span></div><div class="callout-body"><p class="my-1.5"><strong>講者現場更正</strong> <a href="https://youtu.be/EPydk3P_k78?t=1411s" data-seek="1411" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:23:31]"><i class="fa-brands fa-youtube text-red-400"></i> [00:23:31]</a>：換算速度時原本講「左邊 2 點多」，正確是「<strong>左邊 3.5、右邊 2.8</strong>」——速度快的先到、慢的後到，講者特別更正並道歉。</p></div></div>
+
+
+<h4 id="2-4-3-三分量波形判讀" class="heading-4">2-4-3 三分量波形判讀 <a href="https://youtu.be/EPydk3P_k78?t=1338s" data-seek="1338" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:22:18]"><i class="fa-brands fa-youtube text-red-400"></i> [00:22:18]</a> <a href="#2-4-3-三分量波形判讀" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p">以 YAK 站波形為例，轉成三個分量：</p>
+
+<ul class="seismic-ul">
+<li><strong>Z（垂直向）</strong></li>
+<li><strong>R（徑向，沿著震源方向）</strong></li>
+<li><strong>T（切向，垂直於徑向）</strong></li>
+</ul>
+
+
+<p class="seismic-p">判讀結果：<strong>T 向的 Lg 波最明顯</strong>，P 波則容易辨識；做長週期濾波後波形更清楚。</p>
+
+
+<h4 id="2-4-4-p-波與-lg-波的能量比-辨識核爆的量化指標" class="heading-4">2-4-4 P 波與 Lg 波的能量比（辨識核爆的量化指標）<a href="https://youtu.be/EPydk3P_k78?t=1465s" data-seek="1465" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:24:25]"><i class="fa-brands fa-youtube text-red-400"></i> [00:24:25]</a> <a href="#2-4-4-p-波與-lg-波的能量比-辨識核爆的量化指標" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p"><strong>計算方法</strong></p>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed">取 P 波一段視窗</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed">取 Lg 波<strong>同樣長度</strong>的多段視窗</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed">分別做頻譜（spectrum）並<strong>疊加</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">4</span><div class="flex-1 leading-relaxed">比較各頻率的能量分布</div></div>
+
+
+<p class="seismic-p"><strong>觀測結果</strong></p>
+<ul class="seismic-ul">
+<li>頻譜有兩個峰值：約 <strong>0.3 Hz</strong> 與約 <strong>2.2 Hz</strong></li>
+<li>低頻段：Lg 能量高；高頻段：Lg 快速下降</li>
+<li>距離超過 <strong>3,000 公里</strong>後，Lg 幾乎與背景雜訊重疊，但 <strong>P 波仍然很強</strong></li>
+</ul>
+
+
+<p class="seismic-p"><strong>判釋準則</strong></p>
+<ul class="seismic-ul">
+<li><strong>Lg 弱 + P 波突然變強 → 最有可能是爆炸</strong></li>
+<li>天然地震：Pg 與 Lg 能量接近，取對數後比值 ≈ 0</li>
+<li>核爆：Pg 遠大於 Lg，比值明顯偏高</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-5-為什麼表面波規模用「20-秒」定義" class="heading-3">2-5 為什麼表面波規模用「20 秒」定義 <a href="#2-5-為什麼表面波規模用「20-秒」定義" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p">這是本場最精彩的推導 <a href="https://youtu.be/EPydk3P_k78?t=1614s" data-seek="1614" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:26:54]"><i class="fa-brands fa-youtube text-red-400"></i> [00:26:54]</a>。</p>
+
+
+<p class="seismic-p"><strong>觀測事實</strong>：核爆訊號做頻譜分析，最大能量落在<strong>週期約 20 秒</strong>；濾出 20 秒訊號後可得到最強的能量波串（到時約 200 多秒）。</p>
+
+
+<p class="seismic-p"><strong>物理解釋（笛子類比）</strong></p>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed">地殼像一支兩端開放的笛子，吹氣時產生<strong>駐波（standing wave）</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed">最容易產生的駐波是<strong>第一個諧波 = 半波長共振</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed">取地殼平均 S 波速度 <strong>3.5 km/s</strong>（方便計算）</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">4</span><div class="flex-1 leading-relaxed">波長 λ = v × T = 3.5 × 20 = <strong>70 km</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">5</span><div class="flex-1 leading-relaxed">半波長 = <strong>35 km</strong> ≈ <strong>大陸地殼平均厚度（30–35 km）</strong></div></div>
+
+
+<p class="seismic-p"><strong>結論</strong>：20 秒表面波正好與大陸地殼厚度形成半波長共振，因此<strong>發育特別好、能量特別強</strong>。這就是全世界計算表面波規模（Ms）都採用 20 秒週期訊號的原因。</p>
+
+
+<div class="seismic-callout callout-quote"><div class="callout-header"><i class="fa-solid fa-quote-left"></i><span>講者原音視角 (SPEAKER'S VOICE)</span></div><div class="callout-body"><p class="my-1.5">講者坦言：以前只知道要記「20 秒」，老師也沒解釋為什麼不是 10 秒或 40 秒，直到做了這個分析才真正理解。台大研究團隊以 <strong>Structural Filter（結構濾波器）</strong> 描述這個現象。</p><p class="my-1.5">講者現場示範吹笛子失敗（「我大概就是 Do 跟 Re」），並提醒同學「不要半夜吹」。</p></div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-6-衰減異常-折射造成的聚焦與散焦" class="heading-3">2-6 衰減異常：折射造成的聚焦與散焦 <a href="#2-6-衰減異常-折射造成的聚焦與散焦" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-6-1-觀測到的異常" class="heading-4">2-6-1 觀測到的異常 <a href="https://youtu.be/EPydk3P_k78?t=1836s" data-seek="1836" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:30:36]"><i class="fa-brands fa-youtube text-red-400"></i> [00:30:36]</a> <a href="#2-6-1-觀測到的異常" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p">以日本 F-Net 測站資料分析 Lg 表面波衰減：</p>
+
+<ul class="seismic-ul">
+<li>取對數後，距離與振幅大致呈<strong>線性</strong>（衰減關係良好）</li>
+<li>但<strong>日本測站在短距離內振幅差異特別大</strong>，「不太聽話」</li>
+<li>同一批資料的<strong>體波卻很聽話</strong>（線性良好）</li>
+</ul>
+
+
+<h4 id="2-6-2-進一步量測-講者指導學生所做的實驗" class="heading-4">2-6-2 進一步量測（講者指導學生所做的實驗）<a href="https://youtu.be/EPydk3P_k78?t=1904s" data-seek="1904" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:31:44]"><i class="fa-brands fa-youtube text-red-400"></i> [00:31:44]</a> <a href="#2-6-2-進一步量測-講者指導學生所做的實驗" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p">對每一個日本 F-Net 測站量測表面波速度，發現<strong>南北向系統性差異</strong>：</p>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>項目</th>
+<th>北</th>
+<th>南</th>
+</tr></thead><tbody>
+<tr>
+<td>表面波速度</td>
+<td><strong>快</strong></td>
+<td>慢</td>
+</tr>
+<tr>
+<td>振幅</td>
+<td><strong>小</strong></td>
+<td>大</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h4 id="2-6-3-物理機制-折射定律" class="heading-4">2-6-3 物理機制：折射定律 <a href="https://youtu.be/EPydk3P_k78?t=1980s" data-seek="1980" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:33:00]"><i class="fa-brands fa-youtube text-red-400"></i> [00:33:00]</a> <a href="#2-6-3-物理機制-折射定律" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>波線<strong>不喜歡進入高速區</strong></li>
+<li><strong>高速異常區 → 散焦（defocusing）</strong>：單位面積波線變少 → 能量低 → 振幅小</li>
+<li><strong>低速異常區 → 聚焦（focusing）</strong>：單位面積波線變多 → 能量高 → 振幅大</li>
+</ul>
+
+
+<h4 id="2-6-4-文獻驗證" class="heading-4">2-6-4 文獻驗證 <a href="https://youtu.be/EPydk3P_k78?t=2068s" data-seek="2068" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:34:28]"><i class="fa-brands fa-youtube text-red-400"></i> [00:34:28]</a> <a href="#2-6-4-文獻驗證" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>2014 年兩篇獨立研究的上部地函速度模型顯示：<strong>北方速度較快、地殼較薄</strong>（上部地函較淺，而上部地函速度比地殼快）</li>
+<li>與觀測到的「北快南慢、北小南大」完全吻合</li>
+<li><strong>結論</strong>：日本測站的表面波異常是<strong>速度構造的聚焦／散焦效應</strong>，不是資料錯誤</li>
+</ul>
+
+
+<div class="seismic-callout callout-quote"><div class="callout-header"><i class="fa-solid fa-quote-left"></i><span>講者原音視角 (SPEAKER'S VOICE)</span></div><div class="callout-body"><p class="my-1.5">講者強調：兩種獨立方法（速度量測 + 文獻模型）互相支持，證明觀測結果有憑有據。</p></div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-7-tiger-炸測實驗-2006–2009" class="heading-3">2-7 TIGER 炸測實驗（2006–2009） <a href="#2-7-tiger-炸測實驗-2006–2009" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-7-1-計畫規模" class="heading-4">2-7-1 計畫規模 <a href="https://youtu.be/EPydk3P_k78?t=2155s" data-seek="2155" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:35:55]"><i class="fa-brands fa-youtube text-red-400"></i> [00:35:55]</a> <a href="#2-7-1-計畫規模" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li><strong>TIGER / TAIGER</strong>：2006–2009 年一系列大型地震觀測計畫</li>
+<li>陸地上佈設大量地震站</li>
+<li>同時出動<strong>海洋研究船</strong>在台灣海域來回航行，使用<strong>主動式震源（空氣槍 air gun）</strong></li>
+<li>結合<strong>反射震測</strong>與<strong>折射震測</strong>（含與陸地測站聯合的遠距折射）</li>
+<li>目標：把台灣地下結構「摸得非常清楚」</li>
+<li>講者形容為「大概百年難遇的大觀測計畫」</li>
+</ul>
+
+
+<h4 id="2-7-2-炸點規劃與「新竹事件」" class="heading-4">2-7-2 炸點規劃與「新竹事件」<a href="https://youtu.be/EPydk3P_k78?t=2199s" data-seek="2199" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:36:39]"><i class="fa-brands fa-youtube text-red-400"></i> [00:36:39]</a> <a href="#2-7-2-炸點規劃與「新竹事件」" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>原規劃<strong>三條測線</strong>：南線、中線、北線</li>
+<li>實際執行 <strong>10 個炸點</strong>：南線 5 個、北線 5 個（<strong>中線被勒令停炸</strong>）</li>
+<li>施炸順序：先南線 → 再北線</li>
+<li><strong>北線由東往西炸</strong>，最後一炸在<strong>新竹河床</strong>，時間是<strong>半夜凌晨一點</strong></li>
+<li><strong>後果</strong>：</li>
+<ul class="seismic-ul-nested">
+<li>新竹是半導體重鎮，許多晶圓廠瞬間收到震動訊號而 <strong>shutdown（停機）</strong></li>
+<li>損失「不知道多少億」</li>
+<li>國科會承受極大壓力（講者提及王老師「一個頭兩個大」），每天有人到中央大學投書抗議</li>
+<li>中部線因此被禁止繼續施炸</li>
+</ul>
+<li><strong>講者的反省</strong>：策略錯誤。應該採「南、中、北」由東往西，把最敏感的新竹留到最後收尾；而且「難道在新竹那種嬌貴的地方施炸前沒有做沙盤推演嗎？」</li>
+<li><strong>時間點的巧合</strong>：新聞曝光幾天後，剛好有更大的新聞出現，才把這件事壓下去</li>
+</ul>
+
+
+<h4 id="2-7-3-氣象署的定規模過程" class="heading-4">2-7-3 氣象署的定規模過程 <a href="https://youtu.be/EPydk3P_k78?t=2302s" data-seek="2302" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:38:22]"><i class="fa-brands fa-youtube text-red-400"></i> [00:38:22]</a> <a href="#2-7-3-氣象署的定規模過程" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>事件發生後新聞曝光，氣象署（張建興老師）緊急定出規模 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.6</span></strong> 並發布</li>
+<li>之後張老師把<strong>所有 10 個炸點</strong>逐一訂出對應規模，建立完整回顧資料</li>
+<li>新竹該次氣象署當下發布的小區域地震規模為 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.7</span></strong>，後續再修正</li>
+</ul>
+
+
+<h4 id="2-7-4-觀測儀器與佈設方式" class="heading-4">2-7-4 觀測儀器與佈設方式 <a href="https://youtu.be/EPydk3P_k78?t=2364s" data-seek="2364" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:39:24]"><i class="fa-brands fa-youtube text-red-400"></i> [00:39:24]</a> <a href="#2-7-4-觀測儀器與佈設方式" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>使用<strong>短週期地震儀</strong>（Texan，德州儀器），<strong>僅垂直向</strong></li>
+<li>施工極簡單：挖小坑 → 腳踩下去 → 放電池（可撐約兩週）</li>
+<li>水平向未對方位（不講究），因為目標是「收到訊號」</li>
+<li>另設有<strong>聽音器（geophone）</strong> 輔助</li>
+</ul>
+
+
+<h4 id="2-7-5-炸藥量-vs-規模-反直覺的結果" class="heading-4">2-7-5 炸藥量 vs. 規模（反直覺的結果）<a href="https://youtu.be/EPydk3P_k78?t=2794s" data-seek="2794" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:46:34]"><i class="fa-brands fa-youtube text-red-400"></i> [00:46:34]</a> <a href="#2-7-5-炸藥量-vs-規模-反直覺的結果" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>炸點</th>
+<th>炸藥量</th>
+<th>規模</th>
+</tr></thead><tbody>
+<tr>
+<td>N3P</td>
+<td><strong>3,000 kg</strong>（最大）</td>
+<td>約 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.67</span></strong></td>
+</tr>
+<tr>
+<td>S1</td>
+<td>1,000 kg</td>
+<td>約 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M3</span></strong></td>
+</tr>
+<tr>
+<td>S3</td>
+<td><strong>500 kg</strong>（最小）</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>結論：炸藥量大 ≠ 規模大。</strong> 規模取決於四個因素：</p>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>炸藥當量</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>爆炸深度</strong>：太淺 → 能量往空中散失 → 與地球偶合差</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed"><strong>周遭介質</strong>：鬆散砂岩層傳遞差；<strong>花崗岩等堅硬地層</strong>轉換效率最好（講者提到 1970 年代已有相關分析）</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">4</span><div class="flex-1 leading-relaxed"><strong>炸藥與介質的偶合（coupling）</strong></div></div>
+
+
+<p class="seismic-p"><strong>偶合效果排序（井孔回填材料）</strong></p>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>回填材料</th>
+<th>效果</th>
+<th>原因</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>角礫石（稜角狀碎石，angular）</strong></td>
+<td><strong>最佳</strong></td>
+<td>顆粒互相卡住、摩擦力大、密閉性好</td>
+</tr>
+<tr>
+<td>砂</td>
+<td>差</td>
+<td></td>
+</tr>
+<tr>
+<td>鵝卵石</td>
+<td>差</td>
+<td>圓滑、互相卡不住、摩擦力小</td>
+</tr>
+<tr>
+<td>水</td>
+<td><strong>最差</strong></td>
+<td>流體，爆炸時被氣壓直接噴出</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">講者補充：講究的做法是回填角礫石後<strong>上層再灌水泥</strong>，等幾天再引爆。風險是一旦灌下去，若中間出問題就「拉不出來」。</p></div></div>
+
+
+<h4 id="2-7-6-能量去向" class="heading-4">2-7-6 能量去向 <a href="https://youtu.be/EPydk3P_k78?t=2957s" data-seek="2957" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:49:17]"><i class="fa-brands fa-youtube text-red-400"></i> [00:49:17]</a> <a href="#2-7-6-能量去向" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p">爆炸後絕大多數能量以<strong>光、熱、聲波</strong>形式散失，或把地表炸出大坑；真正傳入地下轉為地震波的能量<strong>只占一小部分</strong>（幾分之幾）。</p>
+
+
+<h4 id="2-7-7-高爆實驗的實務困難" class="heading-4">2-7-7 高爆實驗的實務困難 <a href="https://youtu.be/EPydk3P_k78?t=2983s" data-seek="2983" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:49:43]"><i class="fa-brands fa-youtube text-red-400"></i> [00:49:43]</a> <a href="#2-7-7-高爆實驗的實務困難" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>人口密集區難以施作，需<strong>公關小組</strong>專門處理鄰損（牆壁龜裂、圍牆倒塌賠償）</li>
+<li>中國稱之為「高爆實驗」（大當量）</li>
+<li>台灣可替代方案：</li>
+<ul class="seismic-ul-nested">
+<li>中油探油用的<strong>震盪車（vibroseis）</strong>，可向中央大學商借</li>
+<li>六部震盪車同時震動——講者親身體驗：站在旁邊會頭痛頭暈（地面加速度極大）</li>
+<li><strong>記得要墊腳尖</strong>，可減少身體承受的震動</li>
+<li>震盪車訊號為 <strong>Sweep（掃頻）</strong>：低頻→高頻或高頻→低頻，聽起來像鳥叫</li>
+<li>較小規模可用<strong>鐵鎚敲擊</strong></li>
+</ul>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-8-資料處理-count-儀器響應與-snr" class="heading-3">2-8 資料處理：count、儀器響應與 SNR <a href="#2-8-資料處理-count-儀器響應與-snr" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-8-1-原始資料是什麼" class="heading-4">2-8-1 原始資料是什麼 <a href="https://youtu.be/EPydk3P_k78?t=2413s" data-seek="2413" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:40:13]"><i class="fa-brands fa-youtube text-red-400"></i> [00:40:13]</a> <a href="#2-8-1-原始資料是什麼" class="h-anchor">#</a></h4>
+
+
+<div class="code-container my-5"><div class="code-header"><div class="flex items-center gap-1.5"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div><span class="code-title">PHYSICS & MECHANICS FORMULA</span></div><pre><code class="language-">原始數據 = 震源 × 地球結構 × 場址效應 × 儀器響應</code></pre></div>
+
+<ul class="seismic-ul">
+<li>資料庫下載的原始數據是<strong>整數 count 值</strong>（1, 2, 3, −1, −2…），<strong>沒有物理單位</strong></li>
+<li>判斷技巧：</li>
+</ul>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>數值特徵</th>
+<th>代表意義</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>幾千、幾萬</strong></td>
+<td>通常是原始 count</td>
+</tr>
+<tr>
+<td><strong>0.000 幾</strong></td>
+<td>通常已復原為速度或加速度</td>
+</tr>
+<tr>
+<td><strong>非整數</strong></td>
+<td>要反問：「這是速度還是加速度？單位是什麼？」</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h4 id="2-8-2-去除儀器響應" class="heading-4">2-8-2 去除儀器響應 <a href="https://youtu.be/EPydk3P_k78?t=2500s" data-seek="2500" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:41:40]"><i class="fa-brands fa-youtube text-red-400"></i> [00:41:40]</a> <a href="#2-8-2-去除儀器響應" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li><strong>觀測地震學的第一課</strong>：把原始數據還原成具有真實物理量的數據</li>
+<li>儀器響應檔為 XML 格式，最新標準為 <strong>StationXML</strong></li>
+<li>不做這一步 → 無法恢復真實地動訊號</li>
+<li><strong>AI 時代的做法</strong>：把 StationXML 與數據丟給 AI，請它用 Python 寫出去響應程式</li>
+<li>資料庫通常會同時提供「原始數據」與「儀器響應」</li>
+<li>講者順帶推薦「達義老師」的「AI 應用地地震學」課程</li>
+</ul>
+
+
+<h4 id="2-8-3-時頻圖與-q-值" class="heading-4">2-8-3 時頻圖與 Q 值 <a href="https://youtu.be/EPydk3P_k78?t=2582s" data-seek="2582" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:43:02]"><i class="fa-brands fa-youtube text-red-400"></i> [00:43:02]</a> <a href="#2-8-3-時頻圖與-q-值" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li><strong>時頻圖</strong>（spectrogram）：X 軸時間、Y 軸頻率、顏色代表能量</li>
+<li>觀測到訊號「<strong>由高頻往低頻</strong>」變化 → 因為<strong>高頻衰減較快</strong></li>
+<li>距離 14 km 與 50 km 的波形比較：遠距離經更多散射體，訊號被拉長</li>
+<li><strong>物理類比</strong>：冬天搓手，慢慢搓不太產熱，快速搓產熱效率高 → 同樣距離內振盪次數（cycle）越多，能量消耗越快</li>
+<li><strong>Q 值（Quality Factor）</strong>：每振盪一個週期能量衰減的幅度；<strong>Q 越小 → 衰減越快</strong></li>
+<li>因此<strong>高頻波傳遞距離短</strong>，低頻波可傳得遠</li>
+</ul>
+
+
+<h4 id="2-8-4-訊噪比-snr" class="heading-4">2-8-4 訊噪比（SNR）<a href="https://youtu.be/EPydk3P_k78?t=2698s" data-seek="2698" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:44:58]"><i class="fa-brands fa-youtube text-red-400"></i> [00:44:58]</a> <a href="#2-8-4-訊噪比-snr" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>定義：取 P 波之後一段視窗（訊號）與 P 波之前一段視窗（雜訊）的<strong>能量比</strong></li>
+<li>用途：評估這組訊號「能不能用」</li>
+<li>講者強調：SNR 不限於地震學，是<strong>所有訊號分析領域通用的品質指標</strong></li>
+</ul>
+
+
+<h4 id="2-8-5-高斯型濾波器" class="heading-4">2-8-5 高斯型濾波器 <a href="https://youtu.be/EPydk3P_k78?t=2734s" data-seek="2734" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:45:34]"><i class="fa-brands fa-youtube text-red-400"></i> [00:45:34]</a> <a href="#2-8-5-高斯型濾波器" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>形狀類似<strong>常態分布</strong></li>
+<li>中心頻率 <strong>f₀</strong> 為目標頻率</li>
+<li>頻寬由<strong>標準差</strong>控制：標準差大 → 能量分布寬；小 → 窄</li>
+<li>TIGER 分析中嘗試 <strong>2 Hz、5 Hz、15 Hz、20 Hz</strong> 等頻帶；最終以 <strong>5 Hz</strong> 主能量最強、最穩定</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-9-地動衰減經驗式與正演模擬" class="heading-3">2-9 地動衰減經驗式與正演模擬 <a href="#2-9-地動衰減經驗式與正演模擬" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-9-1-什麼是「經驗式-empirical-relationship-」" class="heading-4">2-9-1 什麼是「經驗式（Empirical Relationship）」<a href="https://youtu.be/EPydk3P_k78?t=3102s" data-seek="3102" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:51:42]"><i class="fa-brands fa-youtube text-red-400"></i> [00:51:42]</a> <a href="#2-9-1-什麼是「經驗式-empirical-relationship-」" class="h-anchor">#</a></h4>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5"><strong>經驗式不是從物理推導出來的公式，而是先有觀測，再從觀測中歸納出的關係式。</strong></p></div></div>
+
+<ul class="seismic-ul">
+<li>在<strong>對數座標</strong>下，資料看起來「雖然凌亂，但很有關係」</li>
+<li>這是大量數據分析時很神奇的現象：<strong>取對數後就變線性</strong></li>
+<li>講者坦言學生時代一直不懂這個名詞，「老師也沒解釋」</li>
+</ul>
+
+
+<h4 id="2-9-2-主要控制因素" class="heading-4">2-9-2 主要控制因素 <a href="https://youtu.be/EPydk3P_k78?t=3160s" data-seek="3160" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:52:40]"><i class="fa-brands fa-youtube text-red-400"></i> [00:52:40]</a> <a href="#2-9-2-主要控制因素" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p">PGV 主要與兩件事相關：</p>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>爆炸源大小（規模／炸藥當量）</strong></div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>距離</strong></div></div>
+
+
+<p class="seismic-p">例：N3P（3,000 kg）振幅明顯高於 750 kg 炸點。</p>
+
+
+<h4 id="2-9-3-campbell-1981-模型" class="heading-4">2-9-3 Campbell (1981) 模型 <a href="https://youtu.be/EPydk3P_k78?t=3222s" data-seek="3222" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:53:42]"><i class="fa-brands fa-youtube text-red-400"></i> [00:53:42]</a> <a href="#2-9-3-campbell-1981-模型" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>最早期、最經典的地動衰減關係式</li>
+<li>形式：<strong>log(PGV) 與 log(距離)、規模呈線性</strong>，並含規模二次項以描述近距離的轉折</li>
+<li>後續各國研究者以此為基礎修改，「式子可以變來變去」，核心仍是 <strong>R（距離）與 M（規模）</strong></li>
+</ul>
+
+
+<h4 id="2-9-4-北線-vs-南線的差異-關鍵發現" class="heading-4">2-9-4 北線 vs. 南線的差異（關鍵發現）<a href="https://youtu.be/EPydk3P_k78?t=3302s" data-seek="3302" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:55:02]"><i class="fa-brands fa-youtube text-red-400"></i> [00:55:02]</a> <a href="#2-9-4-北線-vs-南線的差異-關鍵發現" class="h-anchor">#</a></h4>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>測線</th>
+<th>地質環境</th>
+<th>衰減行為</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>北線</strong></td>
+<td>山區／岩盤</td>
+<td>各炸點都呈良好線性</td>
+</tr>
+<tr>
+<td><strong>南線（東部）</strong></td>
+<td>中央山脈</td>
+<td>呈線性</td>
+</tr>
+<tr>
+<td><strong>南線（西部 S1、S2）</strong></td>
+<td><strong>沖積層</strong></td>
+<td><strong>6–7 公里內能量幾乎不衰減（平坦）</strong></td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>異常的進一步分析</strong></p>
+
+<ul class="seismic-ul">
+<li>S2 炸點位於沖積層西緣、接近西部麓山帶</li>
+<li><strong>S2 東側與西側測站的訊號截然不同</strong> → 與地表地質高度相關</li>
+<li>S1（西）與 S2（東）幾乎對稱分布於沖積層中，兩側訊號可互相對照</li>
+<li>結論：這是<strong>沖積層效應</strong>，不是資料錯誤（與黃老師合作的研究）</li>
+</ul>
+
+
+<h4 id="2-9-5-為什麼要用-6-km-s-的-reduction-velocity" class="heading-4">2-9-5 為什麼要用 6 km/s 的 Reduction Velocity <a href="https://youtu.be/EPydk3P_k78?t=3412s" data-seek="3412" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:56:52]"><i class="fa-brands fa-youtube text-red-400"></i> [00:56:52]</a> <a href="#2-9-5-為什麼要用-6-km-s-的-reduction-velocity" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p"><strong>問題</strong>：傳統記錄剖面中，P 波應該是「越遠越晚到」的斜線，為什麼圖上近距離與遠距離的 P 波看起來同時到達？</p>
+
+
+<p class="seismic-p"><strong>解答</strong>：做了<strong>約化（reduction）</strong> 處理——</p>
+
+
+<div class="code-container my-5"><div class="code-header"><div class="flex items-center gap-1.5"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div><span class="code-title">PHYSICS & MECHANICS FORMULA</span></div><pre><code class="language-">約化時間 t&#x27; = 觀測時間 t − 距離 / 6 (km/s)</code></pre></div>
+
+<ul class="seismic-ul">
+<li>用 6 km/s 的斜率把初達 P 波「拉平」</li>
+<li>目的：讓<strong>後達波（multiple）看得更清楚</strong></li>
+<li>圖上 Y 軸其實是「原始時間扣除 距離 ÷ 6」</li>
+</ul>
+
+
+<h4 id="2-9-6-正演模擬-forward-modeling-simulation-synthetic" class="heading-4">2-9-6 正演模擬（Forward Modeling / Simulation / Synthetic）<a href="https://youtu.be/EPydk3P_k78?t=3545s" data-seek="3545" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [00:59:05]"><i class="fa-brands fa-youtube text-red-400"></i> [00:59:05]</a> <a href="#2-9-6-正演模擬-forward-modeling-simulation-synthetic" class="h-anchor">#</a></h4>
+
+
+<p class="seismic-p"><strong>流程</strong>：假設速度結構 → 合成理論波形 → 與觀測波形比對</p>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>模型</th>
+<th>特徵</th>
+<th>模擬結果</th>
+</tr></thead><tbody>
+<tr>
+<td>氣象署早期模型</td>
+<td>分層定值，「像蛋糕一層一層」</td>
+<td>與觀測<strong>不像</strong></td>
+</tr>
+<tr>
+<td><strong>1D 梯度模型</strong></td>
+<td>淺層速度<strong>陡降</strong>：3 公里內由 4 km/s 降到 2 km/s</td>
+<td><strong>能重現多個 Multiple</strong></td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>機制（Snell's Law）</strong></p>
+
+<ul class="seismic-ul">
+<li>速度往下變化太劇烈 → 波線<strong>下不去</strong>，碰到高速層就<strong>折返</strong></li>
+<li>入射角太小（接近垂直）→ 穿透很深、傳得很遠</li>
+<li>入射角大 → 很淺就被困在低速層內 → 產生 P、P1、P2、P3 等多次反射</li>
+<li>這正是觀測到的 <strong>P、PP、PPP（<span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M1</span>、<span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2</span>、<span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M3</span>）</strong> 波序</li>
+</ul>
+
+
+<p class="seismic-p"><strong>這不是爆炸獨有現象</strong> <a href="https://youtu.be/EPydk3P_k78?t=3753s" data-seek="3753" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:02:33]"><i class="fa-brands fa-youtube text-red-400"></i> [01:02:33]</a></p>
+
+<ul class="seismic-ul">
+<li>天然<strong>極淺層地震</strong>同樣看得到 Multiple</li>
+<li>例：南部地震（距測站 30 餘公里、CHY1 約 40 公里）也出現 P、PP、PPP、S、SS</li>
+<li>講者稱這種「下不去」的相位為 <strong>diving phase / Multiple Tethering Phase</strong>（像潛水一樣下不去）</li>
+</ul>
+
+
+<p class="seismic-p"><strong>經驗式建立成果</strong> <a href="https://youtu.be/EPydk3P_k78?t=3780s" data-seek="3780" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:03:00]"><i class="fa-brands fa-youtube text-red-400"></i> [01:03:00]</a></p>
+
+<ul class="seismic-ul">
+<li>適用規模範圍：<strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M1</span> – <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M3.5</span></strong></li>
+<li>預測值與觀測 PGV 差異約在 <strong>1 m/s 以內</strong>（講者認為略大，但線性關係相當好；R² 未在現場說明）</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-10-應用-2014-高雄氣爆規模反推" class="heading-3">2-10 應用：2014 高雄氣爆規模反推 <a href="https://youtu.be/EPydk3P_k78?t=3876s" data-seek="3876" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:04:36]"><i class="fa-brands fa-youtube text-red-400"></i> [01:04:36]</a> <a href="#2-10-應用-2014-高雄氣爆規模反推" class="h-anchor">#</a></h3>
+
+
+<h4 id="2-10-1-事件特性" class="heading-4">2-10-1 事件特性 <a href="#2-10-1-事件特性" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li><strong>不是點源</strong>：多條管線連續爆炸（砰砰砰砰砰一路爆上去）</li>
+<li>最嚴重的是<strong>消防員到場救災時才爆的那條管線</strong>，造成傷亡</li>
+<li>位於市區 → 大量<strong>監視器</strong>記錄到爆炸位置與時間</li>
+</ul>
+
+
+<h4 id="2-10-2-監視器時鐘的陷阱" class="heading-4">2-10-2 監視器時鐘的陷阱 <a href="#2-10-2-監視器時鐘的陷阱" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>監視器時鐘漂移極快，需經常校準</li>
+<li>誤差常見<strong>幾秒到幾分鐘</strong>，講者甚至看過<strong>落後兩小時</strong>的案例</li>
+</ul>
+
+
+<h4 id="2-10-3-規模反推結果" class="heading-4">2-10-3 規模反推結果 <a href="#2-10-3-規模反推結果" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>使用 <strong>BATS 觀測站</strong>與氣象署鄰近測站資料</li>
+<li>把測到的 P 波（5 Hz）振幅套入 TIGER 建立的衰減式：</li>
+<ul class="seismic-ul-nested">
+<li><strong>近距離</strong>行為接近 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.7</span></strong>（與 N3P 炸點相近）</li>
+<li><strong>遠距離</strong>行為接近 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.2</span>–2.3</strong></li>
+<li><strong>平均規模約 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.38</span></strong></li>
+</ul>
+<li>換算炸藥當量：約相當於 <strong>750–780 kg</strong> 炸藥</li>
+<li>對照：新竹該次炸測由張建興老師定的規模為 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.6</span></strong>，兩者量級相當</li>
+</ul>
+
+
+<p class="seismic-p"><strong>應用價值</strong>：在西部平原，這條經驗式可用來<strong>快速評估不明爆炸事件的規模</strong>。</p>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-11-結論" class="heading-3">2-11 結論 <a href="https://youtu.be/EPydk3P_k78?t=4055s" data-seek="4055" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:07:35]"><i class="fa-brands fa-youtube text-red-400"></i> [01:07:35]</a> <a href="#2-11-結論" class="h-anchor">#</a></h3>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>地動衰減式具區域性</strong>：從北韓核試爆的觀測可知，衰減公式會「因地而移」，建立全球通用式相當困難。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>區域差異的成因</strong>：如日本海的速度構造異常，會使不同地點觀測值不同；建立關係式時必須考慮<strong>空間差異性</strong>。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed"><strong>地動預估式是「動態調整」的</strong>：要知道「哪裡的地震、在哪個地點會產生多大的地動」，都有對應的預估式。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">4</span><div class="flex-1 leading-relaxed"><strong>現有資源</strong>：</div></div>
+<ul class="seismic-ul">
+<li>中央大學 <strong>E-DREAM</strong> 團隊</li>
+<li><strong>TEM（台灣地震模型）</strong>：馬國鳳老師團隊（講者現任所長團隊）</li>
+<li>目的：評估地震發生時各地點的最大震幅</li>
+</ul>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">5</span><div class="flex-1 leading-relaxed"><strong>本研究定位</strong>：以 TIGER 炸測事件建立 PGV 預測模式，山區與平原皆有涵蓋，屬<strong>通用式</strong>；但應用到西部平原時仍需細部修正。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">6</span><div class="flex-1 leading-relaxed"><strong>西部平原需重新考量</strong>：厚沖積層使近距離（6–7 km）能量不衰減，且須處理<strong>場址效應</strong>問題。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">7</span><div class="flex-1 leading-relaxed"><strong>炸藥量不是唯一因素</strong>：3,000 kg 的規模竟不是最大，深度與偶合情況都有影響。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">8</span><div class="flex-1 leading-relaxed"><strong>應用示例</strong>：可用此經驗式回推高雄氣爆的規模。</div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-12-現場補充-氣象署的兩個故事" class="heading-3">2-12 現場補充：氣象署的兩個故事 <a href="https://youtu.be/EPydk3P_k78?t=4215s" data-seek="4215" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:10:15]"><i class="fa-brands fa-youtube text-red-400"></i> [01:10:15]</a> <a href="#2-12-現場補充-氣象署的兩個故事" class="h-anchor">#</a></h3>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">由現場聽眾（曾任職氣象署）分享，回應講者結論中提到的 2017 北韓核試。</p></div></div>
+
+
+<h4 id="故事一-2017-北韓核試-南韓氣象廳的誤判" class="heading-4">故事一：2017 北韓核試，南韓氣象廳的誤判 <a href="#故事一-2017-北韓核試-南韓氣象廳的誤判" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>南韓氣象廳第一時間偵測到巨大地表震動，<strong>無法判斷是地震還是核爆</strong></li>
+<li>直接對民眾發布「北韓發生 <strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-red-500/20 text-red-400 border-red-500/40 text-xs">M6.0</span> 地震</strong>」</li>
+<li>不久後才發現「糟糕，是核子試爆」</li>
+<li>後果：政府官員承受極大責難；據聞地震中心主任因此下台，從首爾被調派到<strong>釜山</strong>（約 300 公里，相當於台北到高雄），直到退休都未再回首爾</li>
+<li>講者補充：據說調職後薪水沒減、工作壓力反而變小，「搞不好也不錯」</li>
+</ul>
+
+
+<h4 id="故事二-tiger-炸測的監測回憶" class="heading-4">故事二：TIGER 炸測的監測回憶 <a href="#故事二-tiger-炸測的監測回憶" class="h-anchor">#</a></h4>
+
+<ul class="seismic-ul">
+<li>當年氣象局常在半夜一兩點收到「今天晚上要炸」的通知</li>
+<li>因觀測網看得到訊號，會用攝影機對著<strong>類比記錄器（畫在紙上的震波）</strong> 拍攝</li>
+<li><strong>南線</strong>炸完約一小時後，<strong>桃園發生規模 5 點多地震</strong>，當時就覺得「應該有關聯」，印象深刻</li>
+<li><strong>新竹</strong>炸完後電話湧入，被迫發布<strong>小區域地震 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.7</span></strong></li>
+<li>媒體追問「氣象局知不知道他們要炸？」官方回應「不知道」，但實際上「攝影機都對著它拍」</li>
+<li>講者的建議：<strong>若事前通知</strong>，讓晶圓廠先停機、炸完再開機，可減少「不知道多少錢」的損失（機台停機會使產能與良率下降）</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h3 id="2-13-q&a-multiple-與-lg-波的差別" class="heading-3">2-13 Q&A：Multiple 與 Lg 波的差別 <a href="https://youtu.be/EPydk3P_k78?t=4446s" data-seek="4446" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:14:06]"><i class="fa-brands fa-youtube text-red-400"></i> [01:14:06]</a> <a href="#2-13-q&a-multiple-與-lg-波的差別" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p">學生提問：講者展示的「同一條時間線上出現多個到時」的圖，是否都是 Lg 波？</p>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>項目</th>
+<th>Multiple（PP、PPP…）</th>
+<th>Lg 波</th>
+</tr></thead><tbody>
+<tr>
+<td>本質</td>
+<td><strong>單一波線</strong>在地表多次彈跳</td>
+<td><strong>多條波線疊加干涉</strong>而成的長波串</td>
+</tr>
+<tr>
+<td>成因</td>
+<td>速度陡變的淺層使射線「下不去」</td>
+<td>S 波在地殼導波層內多次反射、干涉</td>
+</tr>
+<tr>
+<td>幾何</td>
+<td>球面（3D）傳播中的反射</td>
+<td>平面（2D）波導內的干涉</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>越快者越前面（P → PP → PPP 依序落後）</td>
+<td>接近<strong>地殼平均 S 波速度</strong>（3.0–3.6 km/s）</td>
+</tr>
+<tr>
+<td>深度</td>
+<td>淺層受限</td>
+<td>整個地殼厚度內</td>
+</tr>
+<tr>
+<td>出現條件</td>
+<td>極淺源（爆炸或極淺地震）</td>
+<td>大陸地殼最容易觀測；海洋地殼不同</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<p class="seismic-p"><strong>一句話總結</strong>：兩者「原理相近但機制不同」——Multiple 是<strong>同一條射線的重複反射</strong>，Lg 是<strong>許多條射線的干涉疊加</strong>。</p>
+
+
+<p class="seismic-p"><strong>補充（西部平原）</strong>：上部約 6 公里厚的沖積層（爛泥巴）隨深度被壓密，速度由約 2 km/s 快速增至 4 km/s，梯度極陡；因此同一距離可同時收到直達 P、PP、PPP 三種波相。</p>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="三-學生專題分享與老師回饋-錄影限定內容" class="heading-2">三、學生專題分享與老師回饋（錄影限定內容） <a href="#三-學生專題分享與老師回饋-錄影限定內容" class="h-anchor">#</a></h2>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">此段（<a href="https://youtu.be/EPydk3P_k78?t=4980s" data-seek="4980" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:23:00]"><i class="fa-brands fa-youtube text-red-400"></i> [01:23:00]</a>–<a href="https://youtu.be/EPydk3P_k78?t=6858s" data-seek="6858" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:54:18]"><i class="fa-brands fa-youtube text-red-400"></i> [01:54:18]</a>）<strong>未收錄於現場筆記 PDF</strong>，是影片中資訊量最大、對專題研究最有價值的部分。</p></div></div>
+
+
+<h3 id="3-1-專題題目與目標" class="heading-3">3-1 專題題目與目標 <a href="#3-1-專題題目與目標" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p"><strong>題目：透過地震儀觀測不同來源的振動訊號</strong>（分享者：鄭同學，姓名依錄音辨識）</p>
+
+
+<p class="seismic-p">三大目標：</p>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>能不能看到？</strong> 小規模爆炸、氣爆等不同來源的振動訊號，地震儀是否收得到，且<strong>不同測站之間是否具一致性</strong></div></div>
+<ul class="seismic-ul">
+<li>參考案例：2020 年北海道<strong>火流星</strong>撞擊（楊馬達教授，錄音辨識）——方圓 200–300 公里內多個測站都收到，且隨距離呈現一致性的到時關係</li>
+</ul>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>時頻圖特徵</strong>：不同來源的時頻圖是否有可辨識的差異，並與<strong>到時圖（travel-time plot）</strong> 互相對應</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed"><strong>回推震源</strong>：利用「時間—距離」關係與到時選取，反推爆炸發生地點，並<strong>限縮誤差範圍</strong></div></div>
+
+
+<h3 id="3-2-四大類研究案例" class="heading-3">3-2 四大類研究案例 <a href="#3-2-四大類研究案例" class="h-anchor">#</a></h3>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>類別</th>
+<th>案例</th>
+</tr></thead><tbody>
+<tr>
+<td><strong>氣爆／爆炸</strong></td>
+<td>台南化學爆炸、高雄氣爆、六輕氣爆、興達電廠爆炸、便當店氣爆</td>
+</tr>
+<tr>
+<td><strong>音爆</strong></td>
+<td>嘉義、花蓮、台東的戰機超音速音爆</td>
+</tr>
+<tr>
+<td><strong>山崩</strong></td>
+<td>馬太鞍溪等山崩事件</td>
+</tr>
+<tr>
+<td><strong>娛樂／人為振動</strong></td>
+<td>演唱會、煙火、居民活動</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h3 id="3-3-分析流程" class="heading-3">3-3 分析流程 <a href="#3-3-分析流程" class="h-anchor">#</a></h3>
+
+
+<div class="code-container my-5"><div class="code-header"><div class="flex items-center gap-1.5"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div><span class="code-title">PHYSICS & MECHANICS FORMULA</span></div><pre><code class="language-">去除儀器響應（選用加速度）→ 到時圖 + 時頻圖（2–8 Hz 濾波）
+→ AI 協助挑選到時、判斷訊號或雜訊 → 速度模型定位 → 以殘差最小者為最佳解</code></pre></div>
+
+
+<h3 id="3-4-主要成果" class="heading-3">3-4 主要成果 <a href="#3-4-主要成果" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p"><strong>（1）台南化學爆炸</strong></p>
+
+<ul class="seismic-ul">
+<li>30 餘公里外的測站都收到訊號，但各站波形大小不一</li>
+<li>遠距離測站需比較鄰近測站的相關性，避免把「剛好在線性分布上的雜訊」誤判為訊號</li>
+<li>定位收斂在距實際事發地點 <strong>200–300 公尺</strong>以內，效果良好</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（2）空氣波 vs. 地傳波</strong></p>
+
+<ul class="seismic-ul">
+<li>以<strong>聲速 340 m/s</strong> 定位，準確度約在 <strong>500 公尺</strong>以內</li>
+<li>若改用<strong>地傳波</strong>（速度快），準確度仍待討論</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（3）時頻圖特徵</strong></p>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>事件類型</th>
+<th>時頻圖特徵</th>
+</tr></thead><tbody>
+<tr>
+<td>六輕氣爆（地表以上）vs. 高雄氣爆（地下）</td>
+<td>中高頻類似，<strong>低頻明顯增強</strong>（地下）</td>
+</tr>
+<tr>
+<td>音爆</td>
+<td>中高頻呈<strong>線性</strong>分布</td>
+</tr>
+<tr>
+<td>山崩</td>
+<td>呈<strong>三角形</strong>分布</td>
+</tr>
+</tbody>
+</table></div>
+
+<ul class="seismic-ul">
+<li>同一事件不同距離的測站：遠距離<strong>低頻仍在、高頻先衰退</strong>（呼應講者的 Q 值說明）</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（4）演唱會（大巨蛋，張惠妹）</strong></p>
+
+<ul class="seismic-ul">
+<li>低頻訊號明顯，來源<strong>不是音響音量</strong>，而是<strong>觀眾隨音樂節奏集體跳動</strong></li>
+<li>不同場次在時間校正（shift）後，出現<strong>共同特徵</strong></li>
+<li>國外研究指出：<strong>每首歌有不同的頻率特徵</strong>，可藉時頻圖辨識曲目</li>
+<li>民眾反映家中會晃動或「類地震」，明確時間點（9:10、9:16、9:28）在時頻圖上都能看到低頻訊號</li>
+<li>其他研究：<strong>8–10 樓</strong>建築對 <strong>2–2.5 Hz</strong> 特別容易共振；即使住家距大巨蛋約 <strong>3 公里</strong>，若頻率吻合也會產生「類地震」</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（5）定位的限制</strong></p>
+
+<ul class="seismic-ul">
+<li><strong>六輕化學廠爆炸</strong>：新聞報導的位置與到時回推的定位點不同；回推結果集中在較南側，事後比對影片與衛星雲圖，認為波形回推的位置更接近真實</li>
+<li><strong>高雄氣爆</strong>：訊號明顯但定位不理想，不同模型下漂移量大，甚至漂到外海</li>
+<li><strong>台中案例</strong>：三個測站訊號明顯，誤差約 200 公尺；但若放寬到時選取，AI 多抓了一個雜訊（多 170 的訊號），誤差就擴大</li>
+<li><strong>音爆</strong>：結合模型與新聞，可判斷戰機由<strong>太平洋往中央山脈</strong>方向移動</li>
+</ul>
+
+
+<h3 id="3-5-學生提出的問題" class="heading-3">3-5 學生提出的問題 <a href="#3-5-學生提出的問題" class="h-anchor">#</a></h3>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">除了殘差之外，有沒有其他檢驗方法可以排除 AI 選錯波包或誤抓雜訊，進而提升定位準確度？</p></div></div>
+
+
+<h3 id="3-6-梁老師的回饋-方法論建議-極具參考價值" class="heading-3">3-6 梁老師的回饋（方法論建議，極具參考價值） <a href="#3-6-梁老師的回饋-方法論建議-極具參考價值" class="h-anchor">#</a></h3>
+
+
+<p class="seismic-p"><strong>（1）先問測站從哪裡來</strong></p>
+
+<ul class="seismic-ul">
+<li>大巨蛋旁有測站（屬氣象署），不是自己架的</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（2）結構物共振的物理</strong></p>
+
+<ul class="seismic-ul">
+<li>大樓高度決定共振模態（地震學所稱第二、第三模態）</li>
+<li>觀測到的多是 <strong>2 點多 Hz</strong>、<strong>5–7 樓</strong>高度</li>
+<li>補充：<strong>汽車經過</strong>也會讓大樓晃動，所上最近有學生在做這個題目</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（3）關於「AI」的用語（重點提醒）</strong></p>
+
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">在學術界報告時，<strong>不要只說「我用 AI 做」</strong>——沒有人知道你在說什麼，而且會立刻被往負面方向想：沒有思考、全部丟給 AI、答案出來卻無法驗證。</p><p class="my-1.5">應該說清楚：<strong>用什麼方法</strong>（例如機器學習？有無訓練模型？用哪個架構？）、<strong>怎麼驗證</strong>。</p></div></div>
+
+
+<p class="seismic-p"><strong>（4）到時偵測的標準方法：STA/LTA</strong></p>
+
+<ul class="seismic-ul">
+<li>傳統做法是<strong>短時窗／長時窗能量比（STA/LTA）</strong></li>
+<li>每個時間點取「前面長時窗」與「後面短時窗」的能量比；有訊號時比值會突然跳升</li>
+<li>這是地震學最常用的到時偵測方法</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（5）SNR 門檻的取捨</strong></p>
+
+<ul class="seismic-ul">
+<li>一般取 <strong>SNR ≥ 2.5 或 3</strong></li>
+<li><strong>資料多 → 門檻拉高</strong>；<strong>資料少 → 門檻降低</strong>，存在 trade-off</li>
+<li>detection 一定要與 SNR 搭配使用</li>
+<li>也可用 <strong>PSD 門檻值</strong>輔助，但 SNR 是最基本的</li>
+<li>不好的資料納入只會<strong>干擾觀測</strong>，可用 SNR 做 downweighting 或 rejection</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（6）用 Bootstrap 估計定位誤差（強烈建議）</strong></p>
+
+<ul class="seismic-ul">
+<li>概念：現有 20 個測站 → 用程式<strong>隨機重抽 20 組（可重複）</strong> → 產生 100 組或 1,000 組 → 每組都做定位</li>
+<li>得到的是<strong>散布的點雲</strong>，不是單一個點</li>
+<li>對點雲做<strong>密度分析</strong> → 得到最佳解</li>
+<li>取 <strong>95% 可信區間</strong>（1,000 點中約 954 點落在此區）→ 形成<strong>二維高斯橢圓</strong></li>
+<li>好處：<strong>不只有位置，還能估計誤差</strong>。「觀測不可能沒有誤差」</li>
+<li>講者笑稱這是「無中生有法」，但已透過 SNR 篩掉壞資料，結果仍可靠</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（7）聲速不要只用 340 m/s</strong></p>
+
+<ul class="seismic-ul">
+<li>聲速與<strong>溫度</strong>有關 → 查氣象署<strong>逐時氣溫</strong>，代入公式估算當天聲速</li>
+<li>講者坦言「其實差異不大、誤差還是很大」，但重點是<strong>有憑有據</strong>：能說明「哪一天、用哪三個站的氣溫資料、對應聲速多少」</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（8）時頻圖上第二條斜線是 Pg 波</strong></p>
+
+<ul class="seismic-ul">
+<li>學生圖上除了聲速（340 m/s）的亮線，還有一條斜率較陡、速度約 <strong>4 km/s</strong> 的訊號 → 應為<strong>近距離的 Pg 波</strong></li>
+<li>建議：<strong>兩組資料（聲波 + Pg）一起做定位約束</strong>，不要只用一組</li>
+<li>注意：P 波在極淺層速度變化很大，不能用單一速度</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（9）飛機音爆可畫 Mach cone</strong></p>
+
+<ul class="seismic-ul">
+<li>音爆呈<strong>錐狀（shock wave cone）</strong>，測站會先後看到訊號</li>
+<li>可參考 <strong>Kanamori</strong> 等人的經典論文（1990 年代<strong>太空梭降落</strong>時，Trinet 測站收到明顯的 inboard 訊號，並畫出 cone 定義進場軌道）</li>
+<li>學生的圖可惜西側沒有測站，「如果有的話會更漂亮」</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（10）規模也可以用經驗式回推</strong></p>
+
+<ul class="seismic-ul">
+<li>量 <strong>5 Hz</strong> 訊號隨距離的分布，套用講者的衰減式</li>
+<li>可估算化學廠爆炸的規模（相當於多少炸藥量）</li>
+</ul>
+
+
+<p class="seismic-p"><strong>（11）資料量太少要小心</strong></p>
+
+<ul class="seismic-ul">
+<li>有些事件只有少數測站收到，定位風險高</li>
+<li>建議先確認資料量與 SNR，再決定是否納入</li>
+</ul>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="四-課程事務與暑期研究計畫" class="heading-2">四、課程事務與暑期研究計畫 <a href="#四-課程事務與暑期研究計畫" class="h-anchor">#</a></h2>
+
+
+<h3 id="4-1-作業與教材" class="heading-3">4-1 作業與教材 <a href="https://youtu.be/EPydk3P_k78?t=4933s" data-seek="4933" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:22:13]"><i class="fa-brands fa-youtube text-red-400"></i> [01:22:13]</a> <a href="#4-1-作業與教材" class="h-anchor">#</a></h3>
+
+<ul class="seismic-ul">
+<li>本次演講有作業（心得），已放在 <strong>e-class</strong></li>
+<li>講者的<strong>投影片與上課錄影</strong>會上傳 e-class，可截取素材放入報告</li>
+<li>心得中可留下<strong>問題</strong>，老師會收集後轉給梁老師回覆</li>
+</ul>
+
+
+<h3 id="4-2-中研院地球所暑期研究計畫" class="heading-3">4-2 中研院地球所暑期研究計畫 <a href="https://youtu.be/EPydk3P_k78?t=6886s" data-seek="6886" target="_blank" rel="noopener noreferrer" class="time-badge" title="點擊在上方播放器跳轉或於 YouTube 開啟 [01:54:46]"><i class="fa-brands fa-youtube text-red-400"></i> [01:54:46]</a> <a href="#4-2-中研院地球所暑期研究計畫" class="h-anchor">#</a></h3>
+
+<ul class="seismic-ul">
+<li>預計<strong>明年 3 月</strong>公告（講者：「3 月吧」）</li>
+<li>臺北市立大學學生可申請，名額「大概是幾個題目」</li>
+<li>領域不限地震學：<strong>地球化學、地球物理、地質學</strong>都有</li>
+<li>講者舉例：</li>
+<ul class="seismic-ul-nested">
+<li>一位北市大學姐後來轉往<strong>創投</strong>領域</li>
+<li>另一位現在是講者的助理／<strong>軟體工程師</strong></li>
+</ul>
+<li>講者的話：</li>
+</ul>
+
+<div class="seismic-callout callout-info"><div class="callout-header"><i class="fa-solid fa-circle-info"></i><span>講座深入註解</span></div><div class="callout-body"><p class="my-1.5">「學地科的人要處理<strong>人類生存問題</strong>——主要是災害。其他的像有趣的科學、振動分析，上至天文下至地理都可以去摸，<strong>但是不要設限</strong>。」</p><p class="my-1.5">「喜歡往 AI 衝的就往 AI 衝，喜歡寫程式的去做程式。我自己現在不大寫程式，都叫 AI 做，指令寫得越詳細，它做得越好。」</p></div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="五-名詞對照表與核心公式" class="heading-2">五、名詞對照表與核心公式 <a href="#五-名詞對照表與核心公式" class="h-anchor">#</a></h2>
+
+
+<h3 id="5-1-名詞對照" class="heading-3">5-1 名詞對照 <a href="#5-1-名詞對照" class="h-anchor">#</a></h3>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>中文</th>
+<th>英文 / 縮寫</th>
+<th>說明</th>
+</tr></thead><tbody>
+<tr>
+<td>法醫地震學</td>
+<td>Forensic Seismology</td>
+<td>以地震學分析作為法律／鑑識證據</td>
+</tr>
+<tr>
+<td>沉默的目擊者</td>
+<td>Silent Witness</td>
+<td>地震儀在無目擊者時的角色</td>
+</tr>
+<tr>
+<td>空氣耦合</td>
+<td>Air Coupling</td>
+<td>空中爆炸或音爆透過大氣壓力引發地面震動</td>
+</tr>
+<tr>
+<td>全面禁止核試爆條約</td>
+<td>CTBT / CTBTO</td>
+<td>國際核試爆監測組織，台灣無法參與</td>
+</tr>
+<tr>
+<td>全球標準地震觀測網</td>
+<td>WWSSN</td>
+<td>1960 年代建制，台北設有測站</td>
+</tr>
+<tr>
+<td>直達 P 波</td>
+<td>Pg</td>
+<td>沿地表／花崗岩層直達</td>
+</tr>
+<tr>
+<td>莫荷面折射波</td>
+<td>Pn</td>
+<td>沿莫荷面傳遞，遠距可能先到</td>
+</tr>
+<tr>
+<td>地殼導波</td>
+<td>Lg</td>
+<td>S 波在地殼內多次反射干涉，3.0–3.6 km/s</td>
+</tr>
+<tr>
+<td>多重反射波</td>
+<td>Multiple（PP、PPP）</td>
+<td>同一射線在地表重複反射</td>
+</tr>
+<tr>
+<td>潛水相位</td>
+<td>Diving phase</td>
+<td>射線「下不去」而被困在淺層</td>
+</tr>
+<tr>
+<td>補償線性偶極</td>
+<td>CLVD</td>
+<td>震源機制的一種極化型態</td>
+</tr>
+<tr>
+<td>地表最大速度</td>
+<td>PGV</td>
+<td>建立衰減式所用的物理量</td>
+</tr>
+<tr>
+<td>品質因子</td>
+<td>Q</td>
+<td>每週期能量衰減程度，Q 小衰減快</td>
+</tr>
+<tr>
+<td>訊噪比</td>
+<td>SNR</td>
+<td>訊號與背景雜訊的能量比</td>
+</tr>
+<tr>
+<td>短／長時窗比</td>
+<td>STA/LTA</td>
+<td>傳統到時偵測方法</td>
+</tr>
+<tr>
+<td>儀器響應</td>
+<td>Instrument Response</td>
+<td>需去除才能還原真實地動；格式為 StationXML</td>
+</tr>
+<tr>
+<td>約化速度</td>
+<td>Reduction Velocity</td>
+<td>本例取 6 km/s，將初達 P 波拉平</td>
+</tr>
+<tr>
+<td>正演模擬</td>
+<td>Forward Modeling / Synthetic</td>
+<td>由速度模型合成理論波形再與觀測比對</td>
+</tr>
+<tr>
+<td>經驗式</td>
+<td>Empirical Relationship</td>
+<td>由觀測歸納（非物理推導），對數座標下呈線性</td>
+</tr>
+<tr>
+<td>震盪車</td>
+<td>Vibroseis</td>
+<td>可控震源，訊號為掃頻（Sweep）</td>
+</tr>
+<tr>
+<td>結構濾波器</td>
+<td>Structural Filter</td>
+<td>地殼厚度造成的 20 秒共振效應</td>
+</tr>
+<tr>
+<td>自助重抽法</td>
+<td>Bootstrap</td>
+<td>隨機重抽樣本估計定位誤差與信賴區間</td>
+</tr>
+<tr>
+<td>馬赫錐</td>
+<td>Mach cone</td>
+<td>超音速音爆的錐狀波前</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<h3 id="5-2-核心公式" class="heading-3">5-2 核心公式 <a href="#5-2-核心公式" class="h-anchor">#</a></h3>
+
+
+<div class="code-container my-5"><div class="code-header"><div class="flex items-center gap-1.5"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></div><span class="code-title">📐 地震物理核心公式 (SEISMIC FORMULA)</span></div><pre><code class="language-">有效正向壓力 = 正向壓力 − 孔隙壓力
+斷層滑動條件：剪應力 &gt; 有效正向壓力 × 摩擦係數
+
+波長 λ = v × T
+20 s × 3.5 km/s = 70 km（全波長）→ 半波長 35 km ≈ 大陸地殼厚度
+
+規模差 1 → 能量差 10^1.5 ≈ 32 倍
+
+約化時間 t&#x27; = t − 距離 / 6 km/s
+
+log(PGV) = a + b·log(R) + c·M + d·M²      （Campbell, 1981 之概念形式）</code></pre></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="六-重點整理" class="heading-2">六、重點整理 <a href="#六-重點整理" class="h-anchor">#</a></h2>
+
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">1</span><div class="flex-1 leading-relaxed"><strong>地震儀是沉默的目擊者</strong>：沒有目擊證人時，波形就是唯一證據 → 法醫地震學。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">2</span><div class="flex-1 leading-relaxed"><strong>爆炸 vs. 地震的五個辨識指標</strong>：P/S 能量比、體波與表面波規模差、海灘球是否全黑、Pg/Lg 比、低頻 Lg 是否被激發。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">3</span><div class="flex-1 leading-relaxed"><strong>因果方向會翻轉責任</strong>：礦坑坍塌案例證明「地震引起坍塌」還是「坍塌引起地震」決定賠償責任。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">4</span><div class="flex-1 leading-relaxed"><strong>注水誘發地震的機制</strong>：孔隙壓力↑ → 有效正向壓力↓ → 摩擦力↓ → 斷層滑動（南韓 2017 <span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-orange-500/20 text-orange-400 border-orange-500/40 text-xs">M5.4</span>）。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">5</span><div class="flex-1 leading-relaxed"><strong>20 秒的祕密</strong>：20 s × 3.5 km/s ÷ 2 = 35 km ≈ 大陸地殼厚度 → 半波長共振 → 表面波規模用 20 秒定義。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">6</span><div class="flex-1 leading-relaxed"><strong>聚焦與散焦</strong>：高速區散焦（振幅小）、低速區聚焦（振幅大）——日本測站異常的解答。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">7</span><div class="flex-1 leading-relaxed"><strong>炸藥量大 ≠ 規模大</strong>：還要看深度、介質、偶合（角礫石最佳、水最差）。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">8</span><div class="flex-1 leading-relaxed"><strong>原始 count 沒有物理意義</strong>：必須去除儀器響應（StationXML）才能得到真實地動。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">9</span><div class="flex-1 leading-relaxed"><strong>經驗式是觀測歸納的</strong>：對數座標下 PGV 與距離、規模呈線性（Campbell 1981）。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">10</span><div class="flex-1 leading-relaxed"><strong>區域性修正不可少</strong>：西部平原厚沖積層（6–7 km 內能量平坦）與山區差異極大。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">11</span><div class="flex-1 leading-relaxed"><strong>實務教訓</strong>：新竹半夜炸測造成晶圓廠 shutdown → 事前通知可大幅降低損失。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">12</span><div class="flex-1 leading-relaxed"><strong>工具與方法</strong>：高斯濾波取 5 Hz、SNR 評估品質、Reduction Velocity 6 km/s、正演模擬驗證速度模型。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">13</span><div class="flex-1 leading-relaxed"><strong>報告時要說「方法」不要只說「AI」</strong>：講清楚演算法、模型、驗證方式，否則會被認為沒有思考。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">14</span><div class="flex-1 leading-relaxed"><strong>到時偵測用 STA/LTA</strong>：短時窗／長時窗能量比是地震學的標準做法。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">15</span><div class="flex-1 leading-relaxed"><strong>定位一定要給誤差</strong>：用 Bootstrap 重抽樣 + 密度分析 + 95% 信賴橢圓。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">16</span><div class="flex-1 leading-relaxed"><strong>聲速會隨溫度改變</strong>：查逐時氣溫估算，比直接用 340 m/s 更有憑有據。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">17</span><div class="flex-1 leading-relaxed"><strong>同一距離可同時收到 P、PP、PPP</strong>：淺層速度梯度極陡造成射線被困在低速層。</div></div>
+
+<div class="flex items-start gap-3 my-2 text-slate-200"><span class="font-mono text-orange-400 font-bold bg-orange-500/10 border border-orange-500/30 px-2 py-0.5 rounded text-xs mt-0.5">18</span><div class="flex-1 leading-relaxed"><strong>演唱會振動來自人群跳動</strong>：2–2.5 Hz 易與 8–10 樓建築共振，3 公里外也可能「類地震」。</div></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="七-影片補充與筆記更正" class="heading-2">七、影片補充與筆記更正 <a href="#七-影片補充與筆記更正" class="h-anchor">#</a></h2>
+
+
+<div class="table-responsive my-6"><table class="seismic-table">
+<thead><tr>
+<th>項目</th>
+<th>現場筆記 PDF</th>
+<th>影片逐字稿（正確）</th>
+<th>說明</th>
+</tr></thead><tbody>
+<tr>
+<td>中國觀測站</td>
+<td>武當江／武漢江</td>
+<td><strong>牡丹江站</strong></td>
+<td>位於黑龍江，講者稱訊號乾淨</td>
+</tr>
+<tr>
+<td>肯亞案地震學家</td>
+<td>Keith Cooper</td>
+<td><strong>Keith Koper</strong></td>
+<td>錄音辨識</td>
+</tr>
+<tr>
+<td>北韓 2006 規模</td>
+<td>4.3（另記 4.03）</td>
+<td><strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40 text-xs">M4.3</span></strong></td>
+<td>「4.03」為口誤</td>
+</tr>
+<tr>
+<td>北韓 2009 規模</td>
+<td>4.7（另記 407）</td>
+<td><strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-amber-500/20 text-amber-300 border-amber-500/40 text-xs">M4.7</span></strong></td>
+<td>「407」為口誤</td>
+</tr>
+<tr>
+<td>Lg 波速度範圍</td>
+<td>3–3.6（日本 2.8–3.6）</td>
+<td>日本 <strong>2.8–3.5</strong></td>
+<td>講者現場更正「3.5 在前、2.8 在後」</td>
+</tr>
+<tr>
+<td>TIGER 3,000 kg 規模</td>
+<td><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.6</span></td>
+<td><strong><span class="inline-flex items-center font-mono font-bold px-1.5 py-0.5 rounded border bg-emerald-500/20 text-emerald-400 border-emerald-500/40 text-xs">M2.67</span></strong></td>
+<td>口述為 2.67</td>
+</tr>
+<tr>
+<td>高雄氣爆當量</td>
+<td>750 kg</td>
+<td><strong>750–780 kg</strong></td>
+<td>兩處口述略有差異</td>
+</tr>
+<tr>
+<td>台灣地震模型（TEM）</td>
+<td>馬國鳳</td>
+<td><strong>馬國鳳（所長）</strong></td>
+<td>影片補充職稱</td>
+</tr>
+<tr>
+<td>學生專題分享</td>
+<td>未收錄</td>
+<td><strong>完整收錄（約 31 分鐘）</strong></td>
+<td>見第三節</td>
+</tr>
+<tr>
+<td>老師回饋（STA/LTA、Bootstrap 等）</td>
+<td>未收錄</td>
+<td><strong>完整收錄</strong></td>
+<td>見 3-6</td>
+</tr>
+<tr>
+<td>暑期研究計畫公告</td>
+<td>未收錄</td>
+<td><strong>明年 3 月公告</strong></td>
+<td>見第四節</td>
+</tr>
+<tr>
+<td>課程作業與教材</td>
+<td>未收錄</td>
+<td><strong>作業在 e-class，投影片與錄影會上傳</strong></td>
+<td>見 4-1</td>
+</tr>
+</tbody>
+</table></div>
+
+
+<hr class="seismic-divider" />
+
+
+<h2 id="八-心得" class="heading-2">八、心得 <a href="#八-心得" class="h-anchor">#</a></h2>
+
+
+<p class="seismic-p">這次梁文宗老師的演講我的收穫很多，不論是在地震波的種類，地震波的各種樣態，在地層間的移動軌跡，都有更深入的了解，其中也講到當時老師在胎灣所做的地震分析，從台灣的最北到最南、最東到最西，都有許多有趣的故事在裏頭，而且在演講的最後還進一部推廣了中研院的暑期實習活動，我十分的有興趣，希望明年可以申請的上。</p>
+
+
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- Mobile Drawer TOC -->
+    <div id="mobileTocDrawer" class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm hidden">
+        <div class="fixed right-0 top-0 bottom-0 w-80 max-w-[85vw] bg-[#0b1220] border-l border-[#233658] p-5 overflow-y-auto">
+            <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-700">
+                <span class="text-sm font-bold text-orange-400 font-tech">講座大綱導航</span>
+                <button id="closeMobileToc" class="p-1 text-slate-400 hover:text-white">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <ul class="toc-list" id="mobileToc">
+                <li class="toc-item toc-h2"><a href="#資料來源與說明" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">資料來源與說明</span></a></li>
+<li class="toc-item toc-h2"><a href="#目錄" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">目錄</span></a></li>
+<li class="toc-item toc-h2"><a href="#一-講座大綱" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">一、講座大綱</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-1-五段式大綱" class="toc-link"><span class="toc-text">1-1 五段式大綱</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-2-核心概念-地震儀是「沉默的目擊者」" class="toc-link"><span class="toc-text">1-2 核心概念：地震儀是「沉默的目擊者」</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-3-為什麼用「速度」而不是「加速度」" class="toc-link"><span class="toc-text">1-3 為什麼用「速度」而不是「加速度」</span></a></li>
+<li class="toc-item toc-h3"><a href="#1-4-會產生地震訊號的震源分類" class="toc-link"><span class="toc-text">1-4 會產生地震訊號的震源分類</span></a></li>
+<li class="toc-item toc-h2"><a href="#二-演講內容紀錄" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">二、演講內容紀錄</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-1-開場-為什麼要研究爆炸" class="toc-link"><span class="toc-text">2-1 開場：為什麼要研究爆炸</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-2-法醫地震學與六個實例" class="toc-link"><span class="toc-text">2-2 法醫地震學與六個實例</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-3-核爆監測的歷史與辨識原理" class="toc-link"><span class="toc-text">2-3 核爆監測的歷史與辨識原理</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-4-震波相位-pg-pn-lg" class="toc-link"><span class="toc-text">2-4 震波相位：Pg、Pn、Lg</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-5-為什麼表面波規模用「20-秒」定義" class="toc-link"><span class="toc-text">2-5 為什麼表面波規模用「20 秒」定義</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-6-衰減異常-折射造成的聚焦與散焦" class="toc-link"><span class="toc-text">2-6 衰減異常：折射造成的聚焦與散焦</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-7-tiger-炸測實驗-2006–2009" class="toc-link"><span class="toc-text">2-7 TIGER 炸測實驗（2006–2009）</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-8-資料處理-count-儀器響應與-snr" class="toc-link"><span class="toc-text">2-8 資料處理：count、儀器響應與 SNR</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-9-地動衰減經驗式與正演模擬" class="toc-link"><span class="toc-text">2-9 地動衰減經驗式與正演模擬</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-10-應用-2014-高雄氣爆規模反推" class="toc-link"><span class="toc-text">2-10 應用：2014 高雄氣爆規模反推</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-11-結論" class="toc-link"><span class="toc-text">2-11 結論</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-12-現場補充-氣象署的兩個故事" class="toc-link"><span class="toc-text">2-12 現場補充：氣象署的兩個故事</span></a></li>
+<li class="toc-item toc-h3"><a href="#2-13-q&a-multiple-與-lg-波的差別" class="toc-link"><span class="toc-text">2-13 Q&A：Multiple 與 Lg 波的差別</span></a></li>
+<li class="toc-item toc-h2"><a href="#三-學生專題分享與老師回饋-錄影限定內容" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">三、學生專題分享與老師回饋（錄影限定內容）</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-1-專題題目與目標" class="toc-link"><span class="toc-text">3-1 專題題目與目標</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-2-四大類研究案例" class="toc-link"><span class="toc-text">3-2 四大類研究案例</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-3-分析流程" class="toc-link"><span class="toc-text">3-3 分析流程</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-4-主要成果" class="toc-link"><span class="toc-text">3-4 主要成果</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-5-學生提出的問題" class="toc-link"><span class="toc-text">3-5 學生提出的問題</span></a></li>
+<li class="toc-item toc-h3"><a href="#3-6-梁老師的回饋-方法論建議-極具參考價值" class="toc-link"><span class="toc-text">3-6 梁老師的回饋（方法論建議，極具參考價值）</span></a></li>
+<li class="toc-item toc-h2"><a href="#四-課程事務與暑期研究計畫" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">四、課程事務與暑期研究計畫</span></a></li>
+<li class="toc-item toc-h3"><a href="#4-1-作業與教材" class="toc-link"><span class="toc-text">4-1 作業與教材</span></a></li>
+<li class="toc-item toc-h3"><a href="#4-2-中研院地球所暑期研究計畫" class="toc-link"><span class="toc-text">4-2 中研院地球所暑期研究計畫</span></a></li>
+<li class="toc-item toc-h2"><a href="#五-名詞對照表與核心公式" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">五、名詞對照表與核心公式</span></a></li>
+<li class="toc-item toc-h3"><a href="#5-1-名詞對照" class="toc-link"><span class="toc-text">5-1 名詞對照</span></a></li>
+<li class="toc-item toc-h3"><a href="#5-2-核心公式" class="toc-link"><span class="toc-text">5-2 核心公式</span></a></li>
+<li class="toc-item toc-h2"><a href="#六-重點整理" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">六、重點整理</span></a></li>
+<li class="toc-item toc-h2"><a href="#七-影片補充與筆記更正" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">七、影片補充與筆記更正</span></a></li>
+<li class="toc-item toc-h2"><a href="#八-心得" class="toc-link"><span class="toc-bullet"></span><span class="toc-text">八、心得</span></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Floating Back to Top Button -->
+    <button id="backToTopBtn" class="fixed bottom-6 right-6 w-11 h-11 bg-orange-600 hover:bg-orange-500 text-white rounded-full shadow-lg shadow-orange-600/40 flex items-center justify-center transition opacity-0 pointer-events-none z-40 transform hover:-translate-y-1">
+        <i class="fa-solid fa-arrow-up"></i>
+    </button>
+
+    <!-- Footer -->
+    <footer class="bg-[#04070d] border-t border-[#1c2942] py-12 mt-16 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-3">
+            <div class="flex items-center justify-center gap-2 text-white font-tech font-bold tracking-wider">
+                <i class="fa-solid fa-earth-asia text-orange-500"></i> FORENSIC SEISMOLOGY ARCHIVE
+            </div>
+            <p class="text-xs text-slate-500">
+                本網頁紀錄依據 2026/11/18 梁文宗老師於臺北市立大學演講完整逐字稿校勘與筆記整理 · 適用於 GitHub Pages 靜態託管
+            </p>
+            <div class="flex items-center justify-center gap-4 text-xs pt-2">
+                <a href="https://youtu.be/EPydk3P_k78" target="_blank" class="hover:text-orange-400 transition"><i class="fa-brands fa-youtube mr-1"></i>YouTube 演講錄影</a>
+                <span>•</span>
+                <a href="https://www.earth.sinica.edu.tw/" target="_blank" class="hover:text-cyan-400 transition"><i class="fa-solid fa-building-columns mr-1"></i>中研院地球科學研究所</a>
+                <span>•</span>
+                <a href="https://github.com" target="_blank" class="hover:text-slate-200 transition"><i class="fa-brands fa-github mr-1"></i>GitHub Pages Ready</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Scripts -->
+    <script>
+        // Reading Progress
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progress-bar').style.width = scrolled + '%';
+
+            const btt = document.getElementById('backToTopBtn');
+            if (winScroll > 400) {
+                btt.classList.remove('opacity-0', 'pointer-events-none');
+            } else {
+                btt.classList.add('opacity-0', 'pointer-events-none');
+            }
+        });
+
+        document.getElementById('backToTopBtn').addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('themeToggle');
+        themeBtn.addEventListener('click', () => {
+            document.body.classList.toggle('light');
+            const isLight = document.body.classList.contains('light');
+            themeBtn.innerHTML = isLight ? '<i class="fa-solid fa-sun text-sm text-amber-500"></i>' : '<i class="fa-solid fa-moon text-sm"></i>';
+        });
+
+        // Video Player Toggle & Sync
+        const toggleVideoBtn = document.getElementById('toggleVideoBtn');
+        const videoPlayerContainer = document.getElementById('videoPlayerContainer');
+        const closeVideoBtn = document.getElementById('closeVideoBtn');
+        const lectureIframe = document.getElementById('lectureIframe');
+
+        function openVideoAtTime(secs) {
+            videoPlayerContainer.classList.remove('hidden');
+            lectureIframe.src = `https://www.youtube-nocookie.com/embed/EPydk3P_k78?autoplay=1&start=${secs}&enablejsapi=1`;
+            videoPlayerContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        toggleVideoBtn.addEventListener('click', () => {
+            videoPlayerContainer.classList.toggle('hidden');
+            if (!videoPlayerContainer.classList.contains('hidden')) {
+                videoPlayerContainer.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        closeVideoBtn.addEventListener('click', () => {
+            videoPlayerContainer.classList.add('hidden');
+        });
+
+        // Timestamp Badges click listener
+        document.querySelectorAll('.time-badge').forEach(badge => {
+            badge.addEventListener('click', (e) => {
+                const seekSecs = badge.getAttribute('data-seek');
+                if (seekSecs) {
+                    e.preventDefault();
+                    openVideoAtTime(seekSecs);
+                }
+            });
+        });
+
+        // Mobile TOC Drawer
+        const mobileTocToggle = document.getElementById('mobileTocToggle');
+        const mobileTocDrawer = document.getElementById('mobileTocDrawer');
+        const closeMobileToc = document.getElementById('closeMobileToc');
+
+        mobileTocToggle.addEventListener('click', () => mobileTocDrawer.classList.remove('hidden'));
+        closeMobileToc.addEventListener('click', () => mobileTocDrawer.classList.add('hidden'));
+        mobileTocDrawer.addEventListener('click', (e) => {
+            if (e.target === mobileTocDrawer) mobileTocDrawer.classList.add('hidden');
+        });
+        document.querySelectorAll('#mobileToc a').forEach(a => {
+            a.addEventListener('click', () => mobileTocDrawer.classList.add('hidden'));
+        });
+
+        // Scrollspy for TOC
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    document.querySelectorAll('.toc-link').forEach(link => {
+                        if (link.getAttribute('href') === '#' + id) {
+                            link.classList.add('active');
+                        } else {
+                            link.classList.remove('active');
+                        }
+                    });
+                }
+            });
+        }, { rootMargin: '-10% 0px -75% 0px' });
+
+        document.querySelectorAll('h2[id], h3[id]').forEach(h => observer.observe(h));
+
+        // Interactive Live Seismograph Simulation
+        const canvas = document.getElementById('seismographCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = canvas.offsetWidth;
+        let height = canvas.height = canvas.offsetHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = canvas.offsetWidth;
+            height = canvas.height = canvas.offsetHeight;
+        });
+
+        const traces = [
+            { name: 'CHY1.BHZ (Vertical - P Wave Focus)', color: '#00e5ff', offset: 0.28, phase: 0 },
+            { name: 'CHY1.BHR (Radial Component)', color: '#ff5e1a', offset: 0.55, phase: 1.5 },
+            { name: 'CHY1.BHT (Transverse - Lg Wave Dominant)', color: '#00ffaa', offset: 0.82, phase: 3.0 }
+        ];
+
+        let time = 0;
+        let blastEvent = null;
+
+        function triggerBlast() {
+            blastEvent = {
+                startTime: time,
+                amplitude: 50,
+                duration: 260
+            };
+        }
+
+        document.getElementById('blastTriggerBtn').addEventListener('click', triggerBlast);
+
+        function drawSeismograph() {
+            ctx.fillStyle = '#060a12';
+            ctx.fillRect(0, 0, width, height);
+
+            // Seismic chart grid
+            ctx.strokeStyle = 'rgba(35, 54, 88, 0.4)';
+            ctx.lineWidth = 1;
+            const gridSpacingX = 40;
+            const gridSpacingY = 25;
+            
+            ctx.beginPath();
+            for (let x = 0; x < width; x += gridSpacingX) {
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, height);
+            }
+            for (let y = 0; y < height; y += gridSpacingY) {
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+            }
+            ctx.stroke();
+
+            // Blast waveform synthesis
+            let blastAdd = 0;
+            if (blastEvent) {
+                const elapsed = time - blastEvent.startTime;
+                if (elapsed > 0 && elapsed < blastEvent.duration) {
+                    const decay = Math.exp(-elapsed / 65);
+                    // P wave (sharp high freq)
+                    let pArrival = 0;
+                    if (elapsed > 15 && elapsed < 60) {
+                        pArrival = Math.sin(elapsed * 1.1) * 15 * decay;
+                    }
+                    // S & Lg wave (larger amp, lower freq)
+                    let lgArrival = 0;
+                    if (elapsed >= 45) {
+                        lgArrival = Math.sin(elapsed * 0.42) * blastEvent.amplitude * decay;
+                    }
+                    blastAdd = pArrival + lgArrival;
+                } else if (elapsed >= blastEvent.duration) {
+                    blastEvent = null;
+                }
+            }
+
+            traces.forEach((trace, idx) => {
+                const baseY = height * trace.offset;
+
+                // Base zero axis
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+                ctx.beginPath();
+                ctx.moveTo(0, baseY);
+                ctx.lineTo(width, baseY);
+                ctx.stroke();
+
+                // Channel Label
+                ctx.fillStyle = trace.color;
+                ctx.font = '10px JetBrains Mono, monospace';
+                ctx.fillText(trace.name, 12, baseY - 8);
+
+                // Waveform
+                ctx.strokeStyle = trace.color;
+                ctx.lineWidth = 1.4;
+                ctx.beginPath();
+
+                for (let x = 0; x < width; x += 2) {
+                    const t = time + (x * 0.08);
+                    let noise = (Math.sin(t * 1.8 + trace.phase) * 2.2) + 
+                                (Math.cos(t * 3.4) * 1.2) + 
+                                (Math.sin(t * 0.5) * 1.8);
+
+                    if (blastAdd !== 0 && x > width * 0.45 && x < width * 0.95) {
+                        const waveEnvelope = Math.sin((x - width * 0.45) / (width * 0.5) * Math.PI);
+                        // T component has highest Lg amplitude
+                        const compWeight = idx === 2 ? 1.4 : (idx === 1 ? 0.9 : 0.7);
+                        noise += blastAdd * waveEnvelope * compWeight;
+                    }
+
+                    const y = baseY + noise;
+                    if (x === 0) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+
+            time += 0.5;
+            requestAnimationFrame(drawSeismograph);
+        }
+
+        drawSeismograph();
+
+        // 20-second Resonance Calculator Logic
+        const velSlider = document.getElementById('velSlider');
+        const periodSlider = document.getElementById('periodSlider');
+        const velVal = document.getElementById('velVal');
+        const periodVal = document.getElementById('periodVal');
+        const waveLenVal = document.getElementById('waveLenVal');
+        const halfWaveVal = document.getElementById('halfWaveVal');
+
+        function updateResonance() {
+            const v = parseFloat(velSlider.value);
+            const t = parseFloat(periodSlider.value);
+            velVal.textContent = v.toFixed(1) + ' km/s';
+            periodVal.textContent = t.toFixed(0) + ' s';
+            const lambda = v * t;
+            waveLenVal.textContent = lambda.toFixed(1) + ' km';
+            halfWaveVal.textContent = (lambda / 2).toFixed(1) + ' km';
+        }
+
+        velSlider.addEventListener('input', updateResonance);
+        periodSlider.addEventListener('input', updateResonance);
+
+        // Search in text
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const term = searchInput.value.trim();
+                if (!term) return;
+                if (window.find) {
+                    window.find(term);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
